@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --binance-yellow: #FCD535;
+  --binance-yellow-dark: #F0B90B;
+  --bg-dark: #0B0E11;
+  --bg-card: #1E2329;
+  --text-primary: #FFFFFF;
+  --status-up: #0ECB81;
+  --status-down: #F6465D;
+}
+
+body {
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
