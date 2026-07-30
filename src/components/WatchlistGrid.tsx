@@ -110,7 +110,9 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
               asset_name={asset.asset_name}
               usd={priceData.usd}
               usd_24h_change={priceData.usd_24h_change}
+              image={priceData.image}
               status={priceData.status}
+              alert_type={priceData.alert_type}
               initialIsStarred={true}
               initialWatchlistId={asset.id}
             />

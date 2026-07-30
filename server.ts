@@ -51,8 +51,9 @@ async function pollMarketData() {
     }
 
     // Update Cache
-    const alertedIds = new Set(alerts.map((a) => a.asset_id))
-    cache.update(rawData, alertedIds)
+    const alertMap = new Map<string, "CRASH" | "SPIKE">()
+    alerts.forEach((a) => alertMap.set(a.asset_id, a.alert_type))
+    cache.update(rawData, alertMap)
     lastFetchSuccess = true
 
     const assetsCount = Object.keys(rawData).length
@@ -87,15 +88,15 @@ app.get("/cache", (req, res) => {
 })
 
 app.post("/debug/simulate-crash", (req, res) => {
-  // Simulates a crash for Bitcoin
-  detector.simulateCrash("bitcoin")
-  res.json({ success: true, message: "Simulated 5% high baseline for Bitcoin. Next tick will trigger a CRASH alert." })
+  const asset_id = req.query.asset_id as string || "bitcoin"
+  detector.simulateCrash(asset_id)
+  res.json({ success: true, message: `Simulated high baseline for ${asset_id}. Next tick will trigger a CRASH alert.` })
 })
 
 app.post("/debug/simulate-spike", (req, res) => {
-  // Simulates a spike for Bitcoin
-  detector.simulateSpike("bitcoin")
-  res.json({ success: true, message: "Simulated 5% low baseline for Bitcoin. Next tick will trigger a SPIKE alert." })
+  const asset_id = req.query.asset_id as string || "bitcoin"
+  detector.simulateSpike(asset_id)
+  res.json({ success: true, message: `Simulated low baseline for ${asset_id}. Next tick will trigger a SPIKE alert.` })
 })
 
 // Start server

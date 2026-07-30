@@ -131,7 +131,9 @@ export default function LivePriceGrid() {
               asset_name={asset.name}
               usd={priceData.usd}
               usd_24h_change={priceData.usd_24h_change}
+              image={priceData.image}
               status={priceData.status}
+              alert_type={priceData.alert_type}
               initialIsStarred={!!watchlist[asset.id]}
               initialWatchlistId={watchlist[asset.id]}
             />

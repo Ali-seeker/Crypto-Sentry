@@ -22,7 +22,7 @@ function MarketRow({
   const [imgError, setImgError] = useState(false)
 
   return (
-    <div className="flex items-center justify-between p-4 bg-bg-card/40 border border-white/5 rounded-lg hover:bg-bg-card/80 transition-colors">
+    <div className="flex items-center justify-between py-3 px-4 bg-bg-card/40 border border-white/5 rounded-lg hover:bg-bg-card/80 transition-colors">
       <div className="flex items-center gap-4 w-1/3">
         {session && (
           <button

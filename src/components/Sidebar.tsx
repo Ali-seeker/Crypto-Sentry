@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { LayoutDashboard, Star, Bell, Search, LogOut, ShieldAlert, Menu, X, User } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
@@ -18,6 +18,7 @@ const navLinks = [
 export default function Sidebar() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { data: session } = useSession()
 
   const handleSignOut = async () => {
     await signOut({ redirect: false })
@@ -62,13 +63,23 @@ export default function Sidebar() {
       </div>
 
       <div className="p-4 border-t border-white/10">
-        <button
-          onClick={handleSignOut}
-          className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-white/60 hover:bg-status-down/10 hover:text-status-down transition-all duration-200 group"
-        >
-          <LogOut size={20} className="text-white/40 group-hover:text-status-down transition-colors" />
-          Sign Out
-        </button>
+        {session ? (
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-white/60 hover:bg-status-down/10 hover:text-status-down transition-all duration-200 group"
+          >
+            <LogOut size={20} className="text-white/40 group-hover:text-status-down transition-colors" />
+            Sign Out
+          </button>
+        ) : (
+          <Link
+            href="/login"
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-white/60 hover:bg-status-up/10 hover:text-status-up transition-all duration-200 group"
+          >
+            <User size={20} className="text-white/40 group-hover:text-status-up transition-colors" />
+            Sign In
+          </Link>
+        )}
       </div>
     </>
   )
