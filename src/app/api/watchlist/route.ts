@@ -2,12 +2,13 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import prisma from "@/lib/prisma"
 import { authOptions } from "@/lib/auth"
+import { logger } from "@/lib/logger"
 
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 })
     }
 
     const watchlist = await prisma.watchlist.findMany({
@@ -17,8 +18,8 @@ export async function GET() {
 
     return NextResponse.json(watchlist)
   } catch (error) {
-    console.error("Watchlist GET error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    logger.error("WatchlistAPI", "Watchlist GET error", { error: (error as Error).message })
+    return NextResponse.json({ error: "Failed to fetch watchlist", code: "WATCHLIST_FETCH_FAILED" }, { status: 500 })
   }
 }
 
@@ -26,14 +27,14 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 })
     }
 
     const body = await req.json()
     const { asset_id, asset_name } = body
 
     if (!asset_id || !asset_name) {
-      return NextResponse.json({ error: "asset_id and asset_name are required" }, { status: 400 })
+      return NextResponse.json({ error: "asset_id and asset_name are required", code: "INVALID_REQUEST" }, { status: 400 })
     }
 
     // Check if it already exists to handle idempotency safely
@@ -58,7 +59,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, id: entry.id }, { status: 201 })
   } catch (error) {
-    console.error("Watchlist POST error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    logger.error("WatchlistAPI", "Watchlist POST error", { error: (error as Error).message })
+    return NextResponse.json({ error: "Failed to add asset to watchlist", code: "WATCHLIST_ADD_FAILED" }, { status: 500 })
   }
 }

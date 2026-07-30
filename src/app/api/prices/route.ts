@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { logger } from "@/lib/logger"
 
 export const dynamic = "force-dynamic"
 
@@ -21,8 +22,8 @@ export async function GET(req: Request) {
       if (response.ok) {
         liveData = await response.json()
       }
-    } catch (e) {
-      console.warn("Express cache unreachable or timed out")
+    } catch (e: any) {
+      logger.warn("PricesAPI", "Express cache unreachable or timed out", { error: e.message })
     } finally {
       clearTimeout(timeoutId)
     }
@@ -79,8 +80,9 @@ export async function GET(req: Request) {
       prices: stalePrices,
     })
   } catch (error) {
+    logger.error("PricesAPI", "Prices GET error", { error: (error as Error).message })
     return NextResponse.json(
-      { error: "Failed to retrieve prices" },
+      { error: "Failed to retrieve prices", code: "PRICES_FETCH_FAILED" },
       { status: 500 }
     )
   }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import prisma from "@/lib/prisma"
 import { authOptions } from "@/lib/auth"
+import { logger } from "@/lib/logger"
 
 export async function DELETE(
   req: Request,
@@ -10,12 +11,12 @@ export async function DELETE(
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+      return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 })
     }
 
     const id = params.id
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 })
+      return NextResponse.json({ error: "ID is required", code: "INVALID_REQUEST" }, { status: 400 })
     }
 
     const entry = await prisma.watchlist.findUnique({
@@ -23,12 +24,12 @@ export async function DELETE(
     })
 
     if (!entry) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 })
+      return NextResponse.json({ error: "Not found", code: "NOT_FOUND" }, { status: 404 })
     }
 
     // Authorization check
     if (entry.user_id !== session.user.id) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+      return NextResponse.json({ error: "Forbidden", code: "FORBIDDEN" }, { status: 403 })
     }
 
     await prisma.watchlist.delete({
@@ -37,7 +38,7 @@ export async function DELETE(
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Watchlist DELETE error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    logger.error("WatchlistAPI", "Watchlist DELETE error", { error: (error as Error).message })
+    return NextResponse.json({ error: "Failed to remove asset from watchlist", code: "WATCHLIST_REMOVE_FAILED" }, { status: 500 })
   }
 }

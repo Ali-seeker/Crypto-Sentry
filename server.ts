@@ -3,6 +3,7 @@ import prisma from "./src/lib/prisma"
 import { fetchMarketData } from "./src/lib/engine/coingecko"
 import { FlashCrashDetector } from "./src/lib/engine/flashCrashDetector"
 import { MemoryCache } from "./src/lib/engine/memoryCache"
+import { logger } from "./src/lib/logger"
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -19,17 +20,32 @@ async function pollMarketData() {
 
     // Write alerts to DB
     for (const alert of alerts) {
-      try {
-        await prisma.cryptoAlert.create({
-          data: {
-            asset_id: alert.asset_id,
-            asset_name: alert.asset_name,
-            price_at_drop: alert.price_at_drop,
-            drop_percentage: alert.drop_percentage,
-          },
-        })
-      } catch (dbError) {
-        console.error(`[DB Error] Failed to write alert for ${alert.asset_name}:`, dbError)
+      let retryCount = 0;
+      let success = false;
+      
+      while (retryCount < 2 && !success) {
+        try {
+          await prisma.cryptoAlert.create({
+            data: {
+              asset_id: alert.asset_id,
+              asset_name: alert.asset_name,
+              price_at_drop: alert.price_at_drop,
+              drop_percentage: alert.drop_percentage,
+            },
+          })
+          success = true;
+        } catch (dbError: any) {
+          retryCount++;
+          if (retryCount >= 2) {
+            logger.error("SurveillanceEngine", "Failed to write alert", { 
+              asset_id: alert.asset_id, 
+              error: dbError.message 
+            })
+          } else {
+            // Wait 500ms before retrying
+            await new Promise(resolve => setTimeout(resolve, 500))
+          }
+        }
       }
     }
 
@@ -38,12 +54,14 @@ async function pollMarketData() {
     cache.update(rawData, alertedIds)
     lastFetchSuccess = true
 
-    const timestamp = new Date().toISOString()
     const assetsCount = Object.keys(rawData).length
-    console.log(`[${timestamp}] Polling Cycle OK: ${assetsCount} assets fetched, ${alerts.length} alerts triggered.`)
+    logger.info("SurveillanceEngine", "Polling cycle completed", { 
+      assets_fetched: assetsCount, 
+      alerts_triggered: alerts.length 
+    })
   } catch (error) {
     lastFetchSuccess = false
-    console.error(`[Polling Error] Cycle failed:`, (error as Error).message)
+    logger.error("SurveillanceEngine", "Polling cycle failed", { error: (error as Error).message })
   }
 }
 
@@ -55,6 +73,7 @@ app.get("/health", (req, res) => {
     cache_age_ms: cache.getCacheAgeMs(),
     last_fetch_success: lastFetchSuccess,
     is_stale: cache.isStale(),
+    memory_rss_mb: Math.round(process.memoryUsage().rss / 1024 / 1024),
   })
 })
 
@@ -74,8 +93,8 @@ app.post("/debug/simulate-crash", (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Surveillance engine running on port ${PORT}`)
-  console.log(`Debug endpoint available at POST /debug/simulate-crash`)
+  logger.info("SurveillanceEngine", `Surveillance engine running on port ${PORT}`)
+  logger.info("SurveillanceEngine", `Debug endpoint available at POST /debug/simulate-crash`)
   
   // Initial fetch immediately
   pollMarketData()
