@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
-import { LayoutDashboard, Star, Bell, Search, LogOut, ShieldAlert, Menu, X } from "lucide-react"
+import { LayoutDashboard, Star, Bell, Search, LogOut, ShieldAlert, Menu, X, User } from "lucide-react"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Watchlist", href: "/watchlist", icon: Star },
   { name: "Alerts", href: "/alerts", icon: Bell },
   { name: "Market", href: "/market", icon: Search },
+  { name: "Profile", href: "/profile", icon: User },
 ]
 
 export default function Sidebar() {

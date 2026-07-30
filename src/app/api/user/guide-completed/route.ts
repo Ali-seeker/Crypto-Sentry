@@ -4,16 +4,26 @@ import { authOptions } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { logger } from "@/lib/logger"
 
-export async function PATCH() {
+export async function PATCH(req: Request) {
   try {
     const session = await getServerSession(authOptions)
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized", code: "UNAUTHORIZED" }, { status: 401 })
     }
 
+    let completed = true
+    try {
+      const body = await req.json()
+      if (typeof body.completed === "boolean") {
+        completed = body.completed
+      }
+    } catch (e) {
+      // Ignore JSON parse error, default to true
+    }
+
     await prisma.user.update({
       where: { id: session.user.id },
-      data: { guide_completed: true },
+      data: { guide_completed: completed },
     })
 
     return NextResponse.json({ success: true })
