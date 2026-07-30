@@ -11,7 +11,10 @@ interface AlertData {
   drop_percentage: number
 }
 
+import { useRouter } from "next/navigation"
+
 export default function AlertNotifier() {
+  const router = useRouter()
   const [toasts, setToasts] = useState<AlertData[]>([])
   const lastCheckedAt = useRef<string>(new Date().toISOString())
 
@@ -23,6 +26,7 @@ export default function AlertNotifier() {
           const newAlerts: AlertData[] = await res.json()
           if (newAlerts.length > 0) {
             setToasts((prev) => [...prev, ...newAlerts])
+            router.refresh()
           }
         }
         lastCheckedAt.current = new Date().toISOString()
