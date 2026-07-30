@@ -35,6 +35,7 @@ export default function Sidebar() {
             <Link
               key={link.name}
               href={link.href}
+              id={link.name === "Alerts" ? "nav-alerts" : undefined}
               onClick={closeMenu}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group ${
                 isActive
@@ -99,7 +100,7 @@ export default function Sidebar() {
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 bg-[#06080A] border-r border-white/5 h-screen sticky top-0">
+      <aside id="app-sidebar" className="hidden md:flex flex-col w-64 bg-[#06080A] border-r border-white/5 h-screen sticky top-0">
         <div className="p-6">
           <Link href="/dashboard" className="flex items-center gap-3 text-binance-yellow">
             <div className="w-10 h-10 bg-bg-card rounded-lg border border-binance-yellow/30 flex items-center justify-center">

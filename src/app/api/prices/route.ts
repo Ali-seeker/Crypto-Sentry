@@ -33,15 +33,16 @@ export async function GET(req: Request) {
         let finalPrices = liveData.prices
         if (requestedIds) {
           finalPrices = {}
-          for (const id of requestedIds) {
+          Array.from(requestedIds).forEach((id) => {
             if (liveData.prices[id]) {
               finalPrices[id] = liveData.prices[id]
             }
-          }
+          })
         }
         return NextResponse.json({
           source: "live",
           stale: false,
+          ageMs: ageMs,
           prices: finalPrices,
         })
       }
@@ -55,6 +56,11 @@ export async function GET(req: Request) {
 
     // Try to construct a stale prices object from DB alerts
     const stalePrices: Record<string, any> = {}
+    
+    // Estimate age based on the most recent alert, or default to a high number if none exist
+    const latestTimestamp = latestAlerts.length > 0 ? new Date(latestAlerts[0].detected_at).getTime() : Date.now() - 999999
+    const dbAgeMs = Date.now() - latestTimestamp
+
     latestAlerts.forEach((alert) => {
       if (requestedIds && !requestedIds.has(alert.asset_id)) return
       if (!stalePrices[alert.asset_id]) {
@@ -69,6 +75,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       source: "database",
       stale: true,
+      ageMs: dbAgeMs,
       prices: stalePrices,
     })
   } catch (error) {

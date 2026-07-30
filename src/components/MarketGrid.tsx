@@ -61,6 +61,7 @@ export default function MarketGrid() {
   const [error, setError] = useState<string | null>(null)
   const [isStale, setIsStale] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [ageMs, setAgeMs] = useState(0)
   
   const [watchlist, setWatchlist] = useState<Record<string, string>>({})
   const { data: session } = useSession()
@@ -90,6 +91,7 @@ export default function MarketGrid() {
       
       setData(result.prices || {})
       setIsStale(result.stale)
+      setAgeMs(result.ageMs)
       setError(null)
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred")
@@ -143,6 +145,7 @@ export default function MarketGrid() {
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
         <input 
+          id="market-search"
           type="text" 
           placeholder="Search by coin name or symbol..." 
           value={searchQuery}
@@ -156,7 +159,9 @@ export default function MarketGrid() {
           <span className="text-xl">⚠️</span>
           <div>
             <p className="font-semibold">Live feed unavailable</p>
-            <p className="text-sm opacity-80">Showing cached or last known database prices. Engine might be down.</p>
+            <p className="text-sm opacity-80">
+              Data is {ageMs ? Math.floor(ageMs / 1000) : '?'}s old — surveillance engine may be offline.
+            </p>
           </div>
         </div>
       )}

@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
+          guide_completed: user.guide_completed,
         }
       },
     }),
@@ -48,15 +49,34 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update" && session?.guide_completed !== undefined) {
+        token.guide_completed = session.guide_completed
+      }
+      
       if (user) {
         token.id = user.id
+        token.guide_completed = (user as any).guide_completed
       }
+      
+      // If we don't have guide_completed in token yet (e.g. from Google Auth or first load),
+      // we should fetch it from DB just once if possible, or assume false for now.
+      // But since user is only present on first signin, let's just make sure it's set.
+      if (token.guide_completed === undefined && token.email) {
+        try {
+          const dbUser = await prisma.user.findUnique({ where: { email: token.email } })
+          if (dbUser) {
+            token.guide_completed = dbUser.guide_completed
+          }
+        } catch (e) {}
+      }
+
       return token
     },
     async session({ session, token }) {
       if (session.user && token.id) {
         (session.user as any).id = token.id
+        ;(session.user as any).guide_completed = token.guide_completed
       }
       return session
     },

@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  email         String      @unique
-  password_hash String
-  created_at    DateTime    @default(now())
-  updated_at    DateTime    @updatedAt
-  watchlists    Watchlist[]
+  id              String      @id @default(cuid())
+  email           String      @unique
+  password_hash   String
+  created_at      DateTime    @default(now())
+  updated_at      DateTime    @updatedAt
+  guide_completed Boolean     @default(false)
+  watchlists      Watchlist[]
 
   @@index([email])
 }

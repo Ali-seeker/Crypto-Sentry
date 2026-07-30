@@ -16,6 +16,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isStale, setIsStale] = useState(false)
+  const [ageMs, setAgeMs] = useState<number | null>(null)
 
   // We maintain a local copy of watchlist so if user unstars, we don't immediately remove it
   // until they refresh, or we can remove it immediately. The spec says:
@@ -33,6 +34,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
       
       setData(result.prices || {})
       setIsStale(result.stale)
+      setAgeMs(result.ageMs)
       setError(null)
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred")
@@ -79,7 +81,9 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
           <span className="text-xl">⚠️</span>
           <div>
             <p className="font-semibold">Live feed unavailable</p>
-            <p className="text-sm opacity-80">Showing cached or last known database prices. Engine might be down.</p>
+            <p className="text-sm opacity-80">
+              Data is {ageMs ? Math.floor(ageMs / 1000) : '?'}s old — surveillance engine may be offline.
+            </p>
           </div>
         </div>
       )}

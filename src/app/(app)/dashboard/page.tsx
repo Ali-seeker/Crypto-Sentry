@@ -23,7 +23,7 @@ export default async function DashboardPage() {
             </div>
             <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
           </div>
-          <div className="text-sm font-medium text-white/50">
+          <div id="dashboard-stats" className="text-sm font-medium text-white/50">
             Total lifetime alerts recorded: <span className="text-white">{totalAlerts}</span>
           </div>
         </header>
