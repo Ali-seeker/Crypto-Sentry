@@ -1,4 +1,6 @@
 import MarketGrid from "@/components/MarketGrid"
+import MarketOverview from "@/components/MarketOverview"
+import LiveIndicator from "@/components/LiveIndicator"
 import { Search } from "lucide-react"
 
 export default function MarketPage() {
@@ -13,11 +15,15 @@ export default function MarketPage() {
               <Search size={28} />
               <span className="font-mono text-sm tracking-widest uppercase">Global Surveillance</span>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight">Market Overview</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-4xl font-bold tracking-tight">Market Overview</h1>
+              <LiveIndicator />
+            </div>
           </div>
         </header>
 
         <main>
+          <MarketOverview />
           <MarketGrid />
         </main>
       </div>

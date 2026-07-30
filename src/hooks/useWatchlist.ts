@@ -2,12 +2,14 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 export function useWatchlistAction(initialIsStarred: boolean, initialWatchlistId?: string) {
   const { data: session } = useSession()
   const [isStarred, setIsStarred] = useState(initialIsStarred)
   const [watchlistId, setWatchlistId] = useState<string | undefined>(initialWatchlistId)
   const isProcessing = useRef(false)
+  const router = useRouter()
 
   useEffect(() => {
     setIsStarred(initialIsStarred)
@@ -38,6 +40,7 @@ export function useWatchlistAction(initialIsStarred: boolean, initialWatchlistId
         if (!res.ok) throw new Error("Failed to star")
         const data = await res.json()
         setWatchlistId(data.id)
+        router.refresh()
       } else {
         if (!previousId) {
           isProcessing.current = false
@@ -48,6 +51,7 @@ export function useWatchlistAction(initialIsStarred: boolean, initialWatchlistId
         })
         if (!res.ok) throw new Error("Failed to unstar")
         setWatchlistId(undefined)
+        router.refresh()
       }
     } catch (error) {
       console.error(error)

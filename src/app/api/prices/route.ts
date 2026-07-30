@@ -68,6 +68,7 @@ export async function GET(req: Request) {
         stalePrices[alert.asset_id] = {
           usd: alert.price_at_drop,
           usd_24h_change: 0,
+          image: "",
           status: "stable", // It's stale, don't show active alert status
         }
       }

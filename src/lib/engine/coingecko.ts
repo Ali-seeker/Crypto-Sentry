@@ -15,18 +15,28 @@ export interface CoinGeckoResponse {
   [key: string]: {
     usd: number
     usd_24h_change: number
+    image: string
   }
 }
 
 export async function fetchMarketData(): Promise<CoinGeckoResponse> {
   const COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
-  const url = `${COINGECKO_API_URL}/simple/price?ids=${ASSETS.join(
-    ","
-  )}&vs_currencies=usd&include_24hr_change=true`
-  return await fetchWithRetry(url)
+  const url = `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&ids=${ASSETS.join(",")}`
+  const rawData = await fetchWithRetry(url)
+  
+  // Map array response to dictionary format
+  const formatted: CoinGeckoResponse = {}
+  for (const coin of rawData) {
+    formatted[coin.id] = {
+      usd: coin.current_price,
+      usd_24h_change: coin.price_change_percentage_24h || 0,
+      image: coin.image,
+    }
+  }
+  return formatted
 }
 
-async function fetchWithRetry(url: string, retries = 3, attempt = 0): Promise<CoinGeckoResponse> {
+async function fetchWithRetry(url: string, retries = 3, attempt = 0): Promise<any[]> {
   try {
     const response = await fetch(url)
 

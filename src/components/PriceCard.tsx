@@ -10,6 +10,7 @@ interface PriceCardProps {
   asset_name: string
   usd: number
   usd_24h_change: number
+  image?: string
   status: "stable" | "alert" | "recovering"
   initialIsStarred?: boolean
   initialWatchlistId?: string
@@ -20,6 +21,7 @@ export default function PriceCard({
   asset_name,
   usd,
   usd_24h_change,
+  image,
   status,
   initialIsStarred = false,
   initialWatchlistId,
@@ -31,6 +33,7 @@ export default function PriceCard({
   // Track previous price for flash animation
   const prevUsd = useRef(usd)
   const [flashColor, setFlashColor] = useState<"up" | "down" | null>(null)
+  const [imgError, setImgError] = useState(false)
 
   useEffect(() => {
     if (usd > prevUsd.current) {
@@ -76,6 +79,18 @@ export default function PriceCard({
 
       <div className="flex justify-between items-center mb-4 relative z-10">
         <div className="flex items-center gap-2">
+          {image && !imgError ? (
+            <img 
+              src={image} 
+              alt={asset_name} 
+              className="w-6 h-6 rounded-full"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-white uppercase">
+              {asset_name.charAt(0)}
+            </div>
+          )}
           <h3 className="font-semibold text-lg">{asset_name}</h3>
           {session && (
             <button

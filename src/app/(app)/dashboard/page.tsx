@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma"
 import LivePriceGrid from "@/components/LivePriceGrid"
+import LiveIndicator from "@/components/LiveIndicator"
 import { ShieldAlert } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -21,7 +22,10 @@ export default async function DashboardPage() {
               <ShieldAlert size={28} />
               <span className="font-mono text-sm tracking-widest uppercase">Surveillance Terminal</span>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
+              <LiveIndicator />
+            </div>
           </div>
           <div id="dashboard-stats" className="text-sm font-medium text-white/50">
             Total lifetime alerts recorded: <span className="text-white">{totalAlerts}</span>

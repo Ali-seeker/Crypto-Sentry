@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { AlertTriangle } from "lucide-react"
+import { AlertTriangle, TrendingDown, TrendingUp } from "lucide-react"
 import { useEffect, useState } from "react"
 
 interface AlertLogProps {
@@ -9,6 +9,8 @@ interface AlertLogProps {
   asset_id: string
   price_at_drop: number
   drop_percentage: number
+  alert_type: string
+  image?: string
   detected_at: string | Date
 }
 
@@ -29,9 +31,12 @@ export default function AlertLog({
   asset_id,
   price_at_drop,
   drop_percentage,
+  alert_type,
+  image,
   detected_at,
 }: AlertLogProps) {
   const [relativeTime, setRelativeTime] = useState("")
+  const [imgError, setImgError] = useState(false)
 
   useEffect(() => {
     const d = new Date(detected_at)
@@ -46,22 +51,54 @@ export default function AlertLog({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-center justify-between p-4 bg-bg-card/40 border border-status-down/20 rounded-lg hover:bg-bg-card/60 transition-colors"
+      className={`flex items-center justify-between p-4 bg-bg-card/40 border rounded-lg hover:bg-bg-card/60 transition-colors ${
+        alert_type === "SPIKE" ? "border-status-up/20" : "border-status-down/20"
+      }`}
     >
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-full bg-status-down/10 flex items-center justify-center">
-          <AlertTriangle size={18} className="text-status-down" />
+        <div
+          className={`w-10 h-10 rounded-full flex items-center justify-center ${
+            alert_type === "SPIKE" ? "bg-status-up/10" : "bg-status-down/10"
+          }`}
+        >
+          {alert_type === "SPIKE" ? (
+            <TrendingUp size={18} className="text-status-up" />
+          ) : (
+            <TrendingDown size={18} className="text-status-down" />
+          )}
         </div>
-        <div>
-          <div className="flex items-center gap-2">
-            <h4 className="font-bold text-white">{asset_name}</h4>
-            <span className="text-xs text-white/40 uppercase tracking-widest">{asset_id}</span>
+        
+        <div className="flex items-center gap-4">
+          {image && !imgError ? (
+            <img 
+              src={image} 
+              alt={asset_name} 
+              className="w-8 h-8 rounded-full"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold text-white uppercase">
+              {asset_name.charAt(0)}
+            </div>
+          )}
+          
+          <div>
+            <div className="flex items-center gap-2">
+              <h4 className="font-bold text-white">{asset_name}</h4>
+              <span className="text-xs text-white/40 uppercase tracking-widest">{asset_id}</span>
+            </div>
+            <p
+              className={`text-sm font-medium mt-0.5 ${
+                alert_type === "SPIKE" ? "text-status-up" : "text-status-down"
+              }`}
+            >
+              {alert_type === "SPIKE" ? "Flash Spike: " : "Flash Crash: "}
+              {Math.abs(drop_percentage).toFixed(2)}% {alert_type === "SPIKE" ? "surge" : "drop"}
+            </p>
           </div>
-          <p className="text-sm text-status-down font-medium mt-0.5">
-            Flash Crash: {drop_percentage.toFixed(2)}% drop
-          </p>
         </div>
       </div>
+      
       <div className="text-right">
         <p className="font-mono text-lg font-bold text-white">
           ${price_at_drop.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}

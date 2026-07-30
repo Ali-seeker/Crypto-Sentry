@@ -31,6 +31,7 @@ async function pollMarketData() {
               asset_name: alert.asset_name,
               price_at_drop: alert.price_at_drop,
               drop_percentage: alert.drop_percentage,
+              alert_type: alert.alert_type,
             },
           })
           success = true;
@@ -88,7 +89,13 @@ app.get("/cache", (req, res) => {
 app.post("/debug/simulate-crash", (req, res) => {
   // Simulates a crash for Bitcoin
   detector.simulateCrash("bitcoin")
-  res.json({ success: true, message: "Simulated 5% high baseline for Bitcoin. Next tick will trigger an alert." })
+  res.json({ success: true, message: "Simulated 5% high baseline for Bitcoin. Next tick will trigger a CRASH alert." })
+})
+
+app.post("/debug/simulate-spike", (req, res) => {
+  // Simulates a spike for Bitcoin
+  detector.simulateSpike("bitcoin")
+  res.json({ success: true, message: "Simulated 5% low baseline for Bitcoin. Next tick will trigger a SPIKE alert." })
 })
 
 // Start server

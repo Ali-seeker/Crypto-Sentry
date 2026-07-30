@@ -12,12 +12,14 @@ function MarketRow({
   asset_name, 
   usd, 
   usd_24h_change, 
+  image,
   initialIsStarred, 
   initialWatchlistId 
 }: any) {
   const { data: session } = useSession()
   const isUp = usd_24h_change >= 0
   const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
+  const [imgError, setImgError] = useState(false)
 
   return (
     <div className="flex items-center justify-between p-4 bg-bg-card/40 border border-white/5 rounded-lg hover:bg-bg-card/80 transition-colors">
@@ -37,9 +39,23 @@ function MarketRow({
             />
           </button>
         )}
-        <div>
-          <h4 className="font-bold text-white text-lg">{asset_name}</h4>
-          <span className="text-xs text-white/40 uppercase tracking-widest">{asset_id}</span>
+        <div className="flex items-center gap-3">
+          {image && !imgError ? (
+            <img 
+              src={image} 
+              alt={asset_name} 
+              className="w-8 h-8 rounded-full"
+              onError={() => setImgError(true)}
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold text-white uppercase">
+              {asset_name.charAt(0)}
+            </div>
+          )}
+          <div>
+            <h4 className="font-bold text-white text-lg">{asset_name}</h4>
+            <span className="text-xs text-white/40 uppercase tracking-widest">{asset_id}</span>
+          </div>
         </div>
       </div>
 
@@ -198,6 +214,7 @@ export default function MarketGrid() {
                   asset_name={asset.name}
                   usd={priceData.usd}
                   usd_24h_change={priceData.usd_24h_change}
+                  image={priceData.image}
                   initialIsStarred={!!watchlist[asset.id]}
                   initialWatchlistId={watchlist[asset.id]}
                 />

@@ -3,6 +3,7 @@ export interface AlertRecord {
   asset_name: string
   price_at_drop: number
   drop_percentage: number
+  alert_type: "CRASH" | "SPIKE"
 }
 
 const ASSET_NAMES: Record<string, string> = {
@@ -44,18 +45,28 @@ export class FlashCrashDetector {
       const dropPct = ((currentPrice - baselinePrice) / baselinePrice) * 100
 
       // Debug log (used to verify math and for the debug endpoint to trigger)
-      // console.log(`[FlashCrashDetector] ${this.getAssetName(asset_id)}: ${currentPrice} USD (Drop: ${dropPct.toFixed(2)}%)`)
+      console.log(`[FlashCrashDetector] ${this.getAssetName(asset_id)}: ${currentPrice} USD (Change: ${dropPct.toFixed(4)}%)`)
 
-      if (dropPct <= -2.0) {
-        const lastAlert = this.lastAlertTime.get(asset_id) || 0
+      const THRESHOLD = parseFloat(process.env.CRASH_THRESHOLD_PCT || "2.0")
+      let alertType: "CRASH" | "SPIKE" | null = null
+      if (dropPct <= -THRESHOLD) {
+        alertType = "CRASH"
+      } else if (dropPct >= THRESHOLD) {
+        alertType = "SPIKE"
+      }
+
+      if (alertType) {
+        const cooldownKey = `${asset_id}:${alertType}`
+        const lastAlert = this.lastAlertTime.get(cooldownKey) || 0
         if (now - lastAlert > this.ALERT_COOLDOWN_MS) {
           alerts.push({
             asset_id,
             asset_name: this.getAssetName(asset_id),
             price_at_drop: currentPrice,
             drop_percentage: dropPct,
+            alert_type: alertType,
           })
-          this.lastAlertTime.set(asset_id, now)
+          this.lastAlertTime.set(cooldownKey, now)
         }
       }
 
@@ -76,6 +87,17 @@ export class FlashCrashDetector {
     } else {
       // If no baseline, fake a high one
       this.baselines.set(asset_id, 1000000)
+    }
+  }
+
+  public simulateSpike(asset_id: string) {
+    const currentBaseline = this.baselines.get(asset_id)
+    if (currentBaseline) {
+      // Artificially deflate the baseline by 5% so the next real reading looks like a spike
+      this.baselines.set(asset_id, currentBaseline * 0.95)
+    } else {
+      // If no baseline, fake a low one
+      this.baselines.set(asset_id, 0.0001)
     }
   }
 }

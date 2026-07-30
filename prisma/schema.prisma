@@ -37,6 +37,7 @@ model CryptoAlert {
   asset_name      String
   price_at_drop   Float
   drop_percentage Float
+  alert_type      String   @default("CRASH")
   detected_at     DateTime @default(now())
 
   @@index([asset_id, detected_at])

@@ -7,6 +7,7 @@ export interface CachedMarketData {
     {
       usd: number
       usd_24h_change: number
+      image: string
       status: "stable" | "alert"
     }
   >
@@ -23,6 +24,7 @@ export class MemoryCache {
       formattedPrices[assetId] = {
         usd: data.usd,
         usd_24h_change: data.usd_24h_change,
+        image: data.image,
         status: alertedAssetIds.has(assetId) ? "alert" : "stable",
       }
     }
