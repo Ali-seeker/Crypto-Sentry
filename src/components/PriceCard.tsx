@@ -2,7 +2,7 @@
 import { TrendingUp, TrendingDown, Star } from "lucide-react"
 import { motion } from "framer-motion"
 import { useSession } from "next-auth/react"
-import { useState, useEffect } from "react"
+import { useWatchlistAction } from "@/hooks/useWatchlist"
 
 interface PriceCardProps {
   asset_id: string
@@ -27,57 +27,12 @@ export default function PriceCard({
   const isUp = usd_24h_change >= 0
   const isAlert = status === "alert"
 
-  const [isStarred, setIsStarred] = useState(initialIsStarred)
-  const [watchlistId, setWatchlistId] = useState<string | undefined>(initialWatchlistId)
+  const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
 
-  // Sync with parent props if they change (e.g. initial load)
-  useEffect(() => {
-    setIsStarred(initialIsStarred)
-    setWatchlistId(initialWatchlistId)
-  }, [initialIsStarred, initialWatchlistId])
-
-  const handleStarClick = async (e: React.MouseEvent) => {
+  const handleStarClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-
-    if (!session) {
-      window.location.href = "/login"
-      return
-    }
-
-    const previousStarred = isStarred
-    const previousId = watchlistId
-
-    // Optimistic update
-    setIsStarred(!previousStarred)
-
-    try {
-      if (!previousStarred) {
-        // Star it
-        const res = await fetch("/api/watchlist", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ asset_id, asset_name }),
-        })
-        if (!res.ok) throw new Error("Failed to star")
-        const data = await res.json()
-        setWatchlistId(data.id)
-      } else {
-        // Unstar it
-        if (!previousId) return
-        const res = await fetch(`/api/watchlist/${previousId}`, {
-          method: "DELETE",
-        })
-        if (!res.ok) throw new Error("Failed to unstar")
-        setWatchlistId(undefined)
-      }
-    } catch (error) {
-      console.error(error)
-      // Revert optimistic update
-      setIsStarred(previousStarred)
-      setWatchlistId(previousId)
-      alert("Failed to update watchlist. Please try again.")
-    }
+    toggleStar(asset_id, asset_name)
   }
 
   return (
