@@ -1,22 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import { signIn } from "next-auth/react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { signIn, useSession } from "next-auth/react"
 import Link from "next/link"
 import { ShieldAlert, Mail, Lock, ArrowRight } from "lucide-react"
 import AuthLayout from "@/components/AuthLayout"
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const { status } = useSession()
+  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [successMsg, setSuccessMsg] = useState(
+    searchParams.get("registered") ? "Account created successfully! Please log in." : ""
+  )
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard")
+    }
+  }, [status, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setSuccessMsg("")
     
     if (!email || !password) {
       setError("Please fill in all fields")
@@ -32,18 +45,17 @@ export default function LoginPage() {
     if (res?.error) {
       setError("Invalid email or password")
     } else {
-      router.push("/")
+      router.push("/dashboard")
     }
   }
 
   return (
-    <AuthLayout>
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full"
-      >
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="w-full"
+    >
         <div className="mb-8">
           <div className="w-12 h-12 bg-bg-card rounded-lg border border-binance-yellow/50 shadow-[0_0_15px_rgba(252,213,53,0.15)] flex items-center justify-center mb-6">
             <ShieldAlert className="text-binance-yellow w-6 h-6" />
@@ -55,6 +67,11 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {successMsg && (
+            <div className="p-3 bg-status-up/10 border border-status-up/20 rounded-md text-status-up text-sm">
+              {successMsg}
+            </div>
+          )}
           {error && (
             <div className="p-3 bg-status-down/10 border border-status-down/20 rounded-md text-status-down text-sm">
               {error}
@@ -131,6 +148,15 @@ export default function LoginPage() {
           </Link>
         </p>
       </motion.div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <AuthLayout>
+      <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+        <LoginForm />
+      </Suspense>
     </AuthLayout>
   )
 }

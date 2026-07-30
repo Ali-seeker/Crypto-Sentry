@@ -1,18 +1,26 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { ShieldAlert, Mail, Lock, ArrowRight } from "lucide-react"
 import AuthLayout from "@/components/AuthLayout"
 
 export default function SignupPage() {
   const router = useRouter()
+  const { status } = useSession()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard")
+    }
+  }, [status, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,7 +55,7 @@ export default function SignupPage() {
         return
       }
 
-      router.push("/login")
+      router.push("/login?registered=true")
     } catch (err) {
       setError("Something went wrong. Please try again.")
       setLoading(false)
