@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { LogOut, RotateCcw } from "lucide-react"
 
 export default function ProfileActions() {
   const router = useRouter()
+  const { update } = useSession()
   const [isRestarting, setIsRestarting] = useState(false)
 
   const handleRestartTour = async () => {
@@ -19,6 +20,7 @@ export default function ProfileActions() {
         },
         body: JSON.stringify({ completed: false }),
       })
+      await update()
       router.push("/dashboard")
     } catch (error) {
       console.error("Failed to restart tour", error)

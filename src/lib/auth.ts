@@ -50,8 +50,17 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, trigger, session }) {
-      if (trigger === "update" && session?.guide_completed !== undefined) {
-        token.guide_completed = session.guide_completed
+      if (trigger === "update") {
+        if (session?.guide_completed !== undefined) {
+          token.guide_completed = session.guide_completed
+        } else if (token.email) {
+          try {
+            const dbUser = await prisma.user.findUnique({ where: { email: token.email } })
+            if (dbUser) {
+              token.guide_completed = dbUser.guide_completed
+            }
+          } catch (e) {}
+        }
       }
       
       if (user) {
