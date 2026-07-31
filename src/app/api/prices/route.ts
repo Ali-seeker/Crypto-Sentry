@@ -66,6 +66,7 @@ export async function GET(req: Request) {
       if (requestedIds && !requestedIds.has(alert.asset_id)) return
       if (!stalePrices[alert.asset_id]) {
         stalePrices[alert.asset_id] = {
+          name: alert.asset_name,
           usd: alert.price_at_drop,
           usd_24h_change: 0,
           image: "",

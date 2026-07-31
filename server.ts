@@ -26,7 +26,16 @@ async function pollMarketData() {
     }
 
     const rawData = await fetchMarketData(allIds)
-    const alerts = detector.checkForCrashes(rawData)
+    const allAlerts = detector.checkForCrashes(rawData)
+
+    // Fetch all watchlist items to filter alerts
+    const watchlistItems = await prisma.watchlist.findMany({
+      select: { asset_id: true }
+    })
+    const watchlistSet = new Set(watchlistItems.map(item => item.asset_id))
+
+    // Only keep alerts for coins that are in someone's watchlist
+    const alerts = allAlerts.filter(alert => watchlistSet.has(alert.asset_id))
 
     // Write alerts to DB
     for (const alert of alerts) {

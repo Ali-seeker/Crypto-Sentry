@@ -103,7 +103,7 @@ export default function MarketGrid() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("/api/prices")
+      const res = await fetch(`/api/prices?t=${Date.now()}`)
       if (!res.ok) throw new Error("Failed to fetch prices")
       const result = await res.json()
       
@@ -210,6 +210,7 @@ export default function MarketGrid() {
                   image={asset.image}
                   initialIsStarred={!!watchlist[asset.id]}
                   initialWatchlistId={watchlist[asset.id]}
+                  ageMs={ageMs}
                 />
               )
             })

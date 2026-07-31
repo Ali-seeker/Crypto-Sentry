@@ -5,6 +5,7 @@ export interface CachedMarketData {
   prices: Record<
     string,
     {
+      name: string
       usd: number
       usd_24h_change: number
       image: string
@@ -24,6 +25,7 @@ export class MemoryCache {
     for (const [assetId, data] of Object.entries(prices)) {
       const isAlert = alertsMap.has(assetId)
       formattedPrices[assetId] = {
+        name: data.name,
         usd: data.usd,
         usd_24h_change: data.usd_24h_change,
         image: data.image,

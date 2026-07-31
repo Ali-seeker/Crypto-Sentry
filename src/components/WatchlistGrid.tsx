@@ -28,7 +28,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
       const assetIds = initialWatchlist.map(w => w.asset_id).join(",")
       if (!assetIds) return
       
-      const res = await fetch(`/api/prices?ids=${assetIds}`)
+      const res = await fetch(`/api/prices?ids=${assetIds}&t=${Date.now()}`)
       if (!res.ok) throw new Error("Failed to fetch prices")
       const result = await res.json()
       
@@ -107,7 +107,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
             <PriceCard
               key={asset.id}
               asset_id={asset.asset_id}
-              asset_name={asset.asset_name}
+              asset_name={priceData.name || asset.asset_name}
               usd={priceData.usd}
               usd_24h_change={priceData.usd_24h_change}
               image={priceData.image}
@@ -115,6 +115,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
               alert_type={priceData.alert_type}
               initialIsStarred={true}
               initialWatchlistId={asset.id}
+              ageMs={ageMs}
             />
           )
         })}

@@ -15,6 +15,7 @@ interface PriceCardProps {
   alert_type?: "CRASH" | "SPIKE"
   initialIsStarred?: boolean
   initialWatchlistId?: string
+  ageMs?: number | null
 }
 
 export default function PriceCard({
@@ -27,6 +28,7 @@ export default function PriceCard({
   initialIsStarred = false,
   initialWatchlistId,
   alert_type,
+  ageMs,
 }: PriceCardProps) {
   const { data: session } = useSession()
   const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
@@ -38,13 +40,26 @@ export default function PriceCard({
   const prevUsd = useRef(usd)
   const [flashColor, setFlashColor] = useState<"up" | "down" | null>(null)
   const [imgError, setImgError] = useState(false)
-  const [lastUpdated, setLastUpdated] = useState("Just now")
+  
+  const dataTimestamp = useRef(Date.now())
+  const [secondsAgo, setSecondsAgo] = useState(0)
 
   useEffect(() => {
-    setLastUpdated("Just now")
-    const timer = setTimeout(() => setLastUpdated("3s ago"), 3000)
-    return () => clearTimeout(timer)
-  }, [usd])
+    // If ageMs is provided, calculate the exact timestamp the engine fetched the data.
+    // If not, fallback to Date.now() when usd changes.
+    if (ageMs !== undefined && ageMs !== null) {
+      dataTimestamp.current = Date.now() - ageMs
+    } else {
+      dataTimestamp.current = Date.now()
+    }
+  }, [ageMs, usd, usd_24h_change])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSecondsAgo(Math.floor((Date.now() - dataTimestamp.current) / 1000))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     if (usd > prevUsd.current) {
@@ -88,36 +103,40 @@ export default function PriceCard({
         )}
       </AnimatePresence>
 
-      <div className="flex justify-between items-center mb-3 relative z-10">
-        <div className="flex items-center gap-2">
-          {image && !imgError ? (
-            <img 
-              src={image} 
-              alt={asset_name} 
-              className="w-6 h-6 rounded-full"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-white uppercase">
-              {asset_name.charAt(0)}
-            </div>
-          )}
-          <h3 className="font-semibold text-lg">{asset_name}</h3>
-          {session && (
-            <button
-              id={asset_id === "bitcoin" ? "watchlist-star" : undefined}
-              onClick={handleStarClick}
-              className="text-binance-yellow hover:scale-110 transition-transform"
-            >
-              <Star
-                size={18}
-                fill={isStarred ? "currentColor" : "none"}
-                className={isStarred ? "text-binance-yellow" : "text-white/30 hover:text-white/70"}
+      <div className="flex justify-between items-start mb-4 relative">
+        <div className="flex items-center gap-3 relative z-10 min-w-0 flex-1 pr-2">
+          <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 flex-shrink-0">
+            {!imgError && image ? (
+              <img 
+                src={image} 
+                alt={asset_name} 
+                className="w-full h-full object-cover" 
+                onError={() => setImgError(true)}
               />
-            </button>
-          )}
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-xs font-bold text-white/50">
+                {asset_name.charAt(0)}
+              </div>
+            )}
+          </div>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-lg leading-tight truncate">{asset_name}</h3>
+              {initialWatchlistId !== undefined && (
+                <button 
+                  onClick={toggleStar}
+                  className="hover:scale-110 transition-transform flex-shrink-0"
+                >
+                  <Star 
+                    size={16} 
+                    className={isStarred ? "fill-binance-yellow text-binance-yellow" : "text-white/30"} 
+                  />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-        <span className="text-sm font-medium text-white/50 uppercase tracking-wider">
+        <span className="text-xs font-medium text-white/50 uppercase tracking-wider truncate max-w-[80px] text-right flex-shrink-0 pt-1">
           {asset_id}
         </span>
       </div>
@@ -144,7 +163,9 @@ export default function PriceCard({
       </div>
       
       <div className="flex justify-end mt-2">
-        <span className="text-[10px] text-white/30 uppercase tracking-wider">Updated {lastUpdated}</span>
+        <span className="text-[10px] text-white/30 uppercase tracking-wider">
+          Updated {secondsAgo === 0 ? "Just now" : `${secondsAgo}s ago`}
+        </span>
       </div>
     </motion.div>
   )
