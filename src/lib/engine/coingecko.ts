@@ -22,7 +22,13 @@ export interface CoinGeckoResponse {
 
 export async function fetchMarketData(): Promise<CoinGeckoResponse> {
   const COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
-  const url = `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&ids=${ASSETS.join(",")}`
+  const apiKey = process.env.COINGECKO_API_KEY
+  let url = `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&ids=${ASSETS.join(",")}`
+  
+  if (apiKey) {
+    url += `&x_cg_demo_api_key=${apiKey}`
+  }
+
   const rawData = await fetchWithRetry(url)
   
   // Map array response to dictionary format

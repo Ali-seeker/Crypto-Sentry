@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "server": "tsx server.ts",
+    "server": "tsx --env-file=.env server.ts",
     "dev:all": "concurrently \"npm run server\" \"npm run dev\"",
     "build": "next build",
     "start": "next start",
