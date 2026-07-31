@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import Link from "next/link"
 import { ShieldAlert, Mail, Lock, ArrowRight } from "lucide-react"
 import AuthLayout from "@/components/AuthLayout"
@@ -55,7 +55,17 @@ export default function SignupPage() {
         return
       }
 
-      router.push("/login?registered=true")
+      const signInResult = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      })
+
+      if (signInResult?.ok && !signInResult?.error) {
+        router.push("/dashboard")
+      } else {
+        router.push("/login?registered=true")
+      }
     } catch (err) {
       setError("Something went wrong. Please try again.")
       setLoading(false)

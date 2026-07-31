@@ -138,20 +138,15 @@ export default function MarketGrid() {
     )
   }
 
-  const allAssets = [
-    { id: "bitcoin", name: "Bitcoin" },
-    { id: "ethereum", name: "Ethereum" },
-    { id: "tether", name: "Tether" },
-    { id: "binancecoin", name: "BNB" },
-    { id: "solana", name: "Solana" },
-    { id: "usd-coin", name: "USDC" },
-    { id: "ripple", name: "XRP" },
-    { id: "dogecoin", name: "Dogecoin" },
-    { id: "toncoin", name: "Toncoin" },
-    { id: "cardano", name: "Cardano" },
-  ]
+  const marketAssets = data ? Object.entries(data).map(([id, info]: [string, any]) => ({
+    id,
+    name: info.name || id,
+    usd: info.usd,
+    usd_24h_change: info.usd_24h_change,
+    image: info.image,
+  })) : []
 
-  const filteredAssets = allAssets.filter(asset => 
+  const filteredAssets = marketAssets.filter(asset => 
     asset.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     asset.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
@@ -194,27 +189,14 @@ export default function MarketGrid() {
             <div className="text-center py-10 text-white/40">No assets found matching "{searchQuery}"</div>
           ) : (
             filteredAssets.map(asset => {
-              const priceData = data?.[asset.id]
-              if (!priceData) {
-                return (
-                  <div key={asset.id} className="flex items-center justify-between p-4 bg-bg-card/20 border border-white/5 rounded-lg opacity-50">
-                    <div>
-                      <h4 className="font-bold text-white text-lg">{asset.name}</h4>
-                      <span className="text-xs text-white/40 uppercase tracking-widest">{asset.id}</span>
-                    </div>
-                    <p className="text-sm italic text-white/40">Data unavailable</p>
-                  </div>
-                )
-              }
-              
               return (
                 <MarketRow
                   key={asset.id}
                   asset_id={asset.id}
                   asset_name={asset.name}
-                  usd={priceData.usd}
-                  usd_24h_change={priceData.usd_24h_change}
-                  image={priceData.image}
+                  usd={asset.usd}
+                  usd_24h_change={asset.usd_24h_change}
+                  image={asset.image}
                   initialIsStarred={!!watchlist[asset.id]}
                   initialWatchlistId={watchlist[asset.id]}
                 />

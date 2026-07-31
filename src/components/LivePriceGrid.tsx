@@ -88,12 +88,14 @@ export default function LivePriceGrid() {
   if (loading && !data) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {ASSETS_LIST.map((asset) => (
-          <div key={asset.id} className="h-32 bg-bg-card/40 border border-white/5 rounded-xl animate-pulse" />
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="h-32 bg-bg-card/40 border border-white/5 rounded-xl animate-pulse" />
         ))}
       </div>
     )
   }
+
+  const watchlistEntries = Object.entries(watchlist)
 
   return (
     <div className="space-y-6">
@@ -110,35 +112,48 @@ export default function LivePriceGrid() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {ASSETS_LIST.map((asset) => {
-          const priceData = data?.[asset.id]
-          if (!priceData) {
-            return (
-              <div key={asset.id} className="p-5 rounded-xl border border-white/5 bg-bg-card/30 opacity-50">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-semibold text-lg">{asset.name}</h3>
-                  <span className="text-sm text-white/30">{asset.id}</span>
+        {watchlistEntries.length === 0 ? (
+          <div className="col-span-full py-16 px-4 text-center border border-dashed border-white/10 rounded-xl bg-bg-card/20">
+            <h3 className="text-2xl font-bold text-white mb-3">Your Watchlist is Empty</h3>
+            <p className="text-white/50 mb-8 max-w-md mx-auto">
+              Monitor your favorite crypto assets in real-time. Head over to the Market page to discover and star assets.
+            </p>
+            <a href="/market" className="px-8 py-3 bg-binance-yellow text-bg-dark font-bold rounded-lg hover:bg-binance-yellow/90 transition-colors inline-block">
+              Explore Market
+            </a>
+          </div>
+        ) : (
+          watchlistEntries.map(([assetId, watchlistId]) => {
+            const priceData = data?.[assetId]
+            
+            if (!priceData) {
+              return (
+                <div key={assetId} className="p-5 rounded-xl border border-white/5 bg-bg-card/30 opacity-50">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-semibold text-lg capitalize">{assetId.replace('-', ' ')}</h3>
+                    <span className="text-sm text-white/30">{assetId}</span>
+                  </div>
+                  <p className="text-sm italic text-white/40">Waiting for data...</p>
                 </div>
-                <p className="text-sm italic">Data unavailable</p>
-              </div>
-            )
-          }
+              )
+            }
 
-          return (
-            <PriceCard
-              key={asset.id}
-              asset_id={asset.id}
-              asset_name={asset.name}
-              usd={priceData.usd}
-              usd_24h_change={priceData.usd_24h_change}
-              image={priceData.image}
-              status={priceData.status}
-              alert_type={priceData.alert_type}
-              initialIsStarred={!!watchlist[asset.id]}
-              initialWatchlistId={watchlist[asset.id]}
-            />
-          )
-        })}
+            return (
+              <PriceCard
+                key={assetId}
+                asset_id={assetId}
+                asset_name={priceData.name || assetId}
+                usd={priceData.usd}
+                usd_24h_change={priceData.usd_24h_change}
+                image={priceData.image}
+                status={priceData.status}
+                alert_type={priceData.alert_type}
+                initialIsStarred={true}
+                initialWatchlistId={watchlistId}
+              />
+            )
+          })
+        )}
       </div>
     </div>
   )
