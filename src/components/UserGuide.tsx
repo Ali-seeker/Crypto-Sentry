@@ -46,15 +46,16 @@ export default function UserGuide() {
   useEffect(() => {
     if (status === "authenticated") {
       const isCompleted = session?.user?.guide_completed
-      if (!isCompleted) {
+      if (!isCompleted && !isActive) {
         // Small delay to ensure initial layout is painted
         const timer = setTimeout(() => {
+          setCurrentStep(0)
           setIsActive(true)
         }, 1000)
         return () => clearTimeout(timer)
       }
     }
-  }, [status, session?.user?.guide_completed])
+  }, [status, session?.user?.guide_completed, isActive])
 
   const dismissGuide = useCallback(async () => {
     try {

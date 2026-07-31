@@ -20,7 +20,7 @@ export default function ProfileActions() {
         },
         body: JSON.stringify({ completed: false }),
       })
-      await update()
+      await update({ guide_completed: false })
       router.push("/dashboard")
     } catch (error) {
       console.error("Failed to restart tour", error)
