@@ -17,7 +17,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <div className="hidden md:flex md:w-1/2 relative bg-[#06080A] border-l border-gray-800 overflow-hidden items-center justify-center">
         
         {/* Abstract Background Chart Pattern */}
-        <div className="absolute inset-0 opacity-20" 
+        <motion.div className="absolute inset-0 opacity-20" 
+          animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           style={{
             backgroundImage: `
               linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
@@ -61,7 +63,11 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         {/* Bottom Left Overlay Card */}
         <div className="absolute bottom-8 left-8 right-8 lg:bottom-12 lg:left-12 max-w-sm bg-black/40 backdrop-blur-md border border-gray-800 p-6 rounded-xl">
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-status-up animate-pulse" />
+            <motion.span 
+              animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              className="w-2 h-2 rounded-full bg-status-up" 
+            />
             <span className="text-[10px] text-status-up tracking-widest font-bold uppercase">System Active</span>
           </div>
           <h2 className="text-lg font-bold mb-2">REAL-TIME MARKET SURVEILLANCE //</h2>

@@ -115,7 +115,7 @@ export default async function AlertsPage({
             </div>
           ) : (
             <div className="space-y-4">
-              {alerts.map((alert) => (
+              {alerts.map((alert, index) => (
                 <AlertLog
                   key={alert.id}
                   asset_id={alert.asset_id}
@@ -125,6 +125,7 @@ export default async function AlertsPage({
                   alert_type={alert.alert_type}
                   image={pricesCache[alert.asset_id]?.image}
                   detected_at={alert.detected_at}
+                  index={index}
                 />
               ))}
             </div>

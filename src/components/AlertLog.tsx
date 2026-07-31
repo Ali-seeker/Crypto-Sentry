@@ -12,6 +12,7 @@ interface AlertLogProps {
   alert_type: string
   image?: string
   detected_at: string | Date
+  index?: number
 }
 
 function timeAgo(date: Date) {
@@ -34,6 +35,7 @@ export default function AlertLog({
   alert_type,
   image,
   detected_at,
+  index = 0,
 }: AlertLogProps) {
   const [relativeTime, setRelativeTime] = useState("")
   const [imgError, setImgError] = useState(false)
@@ -49,8 +51,9 @@ export default function AlertLog({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.05, type: "spring", stiffness: 300, damping: 30 }}
       className={`flex items-center justify-between p-4 bg-bg-card/40 border rounded-lg hover:bg-bg-card/60 transition-colors ${
         alert_type === "SPIKE" ? "border-status-up/20" : "border-status-down/20"
       }`}

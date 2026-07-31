@@ -109,7 +109,7 @@ export default function SignupPage() {
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:ring-1 focus:ring-binance-yellow transition-all"
+                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:shadow-[0_0_15px_rgba(252,213,53,0.2)] transition-all duration-300"
                 placeholder="name@example.com"
               />
             </div>
@@ -127,19 +127,22 @@ export default function SignupPage() {
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:ring-1 focus:ring-binance-yellow transition-all"
+                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:shadow-[0_0_15px_rgba(252,213,53,0.2)] transition-all duration-300"
                 placeholder="••••••••"
               />
             </div>
           </div>
 
-          <button 
+          <motion.button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-binance-yellow text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:scale-[1.02] hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
+            whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="w-full bg-binance-yellow text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
           >
             {loading ? "Creating Account..." : "Create Account"} <ArrowRight className="w-4 h-4" />
-          </button>
+          </motion.button>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">

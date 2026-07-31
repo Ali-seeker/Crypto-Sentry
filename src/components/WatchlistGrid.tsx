@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import PriceCard from "./PriceCard"
+import Skeleton from "./Skeleton"
 
 interface WatchlistGridProps {
   initialWatchlist: Array<{
@@ -68,7 +69,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {initialWatchlist.map((asset) => (
-          <div key={asset.id} className="h-32 bg-bg-card/40 border border-white/5 rounded-xl animate-pulse" />
+          <Skeleton key={asset.id} className="h-32 rounded-xl" />
         ))}
       </div>
     )
@@ -89,7 +90,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {initialWatchlist.map((asset) => {
+        {initialWatchlist.map((asset, index) => {
           const priceData = data?.[asset.asset_id]
           if (!priceData) {
             return (
@@ -116,6 +117,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
               initialIsStarred={true}
               initialWatchlistId={asset.id}
               ageMs={ageMs}
+              index={index}
             />
           )
         })}

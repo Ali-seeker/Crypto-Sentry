@@ -1,11 +1,15 @@
 "use client"
+// Trigger HMR rebuild
 
 import { useState, useEffect } from "react"
 import { Search, Plus } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useWatchlistAction } from "@/hooks/useWatchlist"
 import { Star, TrendingUp, TrendingDown } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 import AddCoinModal from "./AddCoinModal"
+import AnimatedNumber from "./AnimatedNumber"
+import Skeleton from "./Skeleton"
 
 // A simplified row component specifically for the market page
 function MarketRow({ 
@@ -14,8 +18,9 @@ function MarketRow({
   usd, 
   usd_24h_change, 
   image,
-  initialIsStarred, 
-  initialWatchlistId 
+  initialIsStarred,
+  initialWatchlistId,
+  index = 0
 }: any) {
   const { data: session } = useSession()
   const isUp = usd_24h_change >= 0
@@ -23,14 +28,20 @@ function MarketRow({
   const [imgError, setImgError] = useState(false)
 
   return (
-    <div className="flex items-center justify-between py-3 px-4 bg-bg-card/40 border border-white/5 rounded-lg hover:bg-bg-card/80 transition-colors">
+    <motion.div 
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: index * 0.05, type: "spring", stiffness: 300, damping: 30 }}
+      className="flex items-center justify-between py-3 px-4 bg-bg-card/40 border border-white/5 rounded-lg hover:bg-bg-card/80 transition-colors"
+    >
       <div className="flex items-center gap-4 w-1/3">
         {session && (
-          <button
+          <motion.button
             onClick={(e) => {
               e.preventDefault()
               toggleStar(asset_id, asset_name)
             }}
+            whileTap={{ scale: 1.5 }}
             className="text-binance-yellow hover:scale-110 transition-transform"
           >
             <Star
@@ -38,7 +49,7 @@ function MarketRow({
               fill={isStarred ? "currentColor" : "none"}
               className={isStarred ? "text-binance-yellow" : "text-white/30 hover:text-white/70"}
             />
-          </button>
+          </motion.button>
         )}
         <div className="flex items-center gap-3">
           {image && !imgError ? (
@@ -61,14 +72,14 @@ function MarketRow({
       </div>
 
       <div className="w-1/3 text-right font-mono text-lg font-bold">
-        ${(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
+        $<AnimatedNumber value={(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })} />
       </div>
 
       <div className={`w-1/3 flex items-center justify-end gap-1 font-semibold ${(usd_24h_change || 0) >= 0 ? "text-status-up" : "text-status-down"}`}>
         {(usd_24h_change || 0) >= 0 ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
         <span>{Math.abs(usd_24h_change || 0).toFixed(2)}%</span>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
@@ -191,7 +202,7 @@ export default function MarketGrid() {
       {loading && !data ? (
         <div className="space-y-4">
           {[1,2,3,4,5].map(i => (
-            <div key={i} className="h-16 bg-bg-card/40 border border-white/5 rounded-lg animate-pulse" />
+            <Skeleton key={i} className="h-16 rounded-lg" />
           ))}
         </div>
       ) : (
@@ -199,7 +210,7 @@ export default function MarketGrid() {
           {filteredAssets.length === 0 ? (
             <div className="text-center py-10 text-white/40">No assets found matching "{searchQuery}"</div>
           ) : (
-            filteredAssets.map(asset => {
+            filteredAssets.map((asset, index) => {
               return (
                 <MarketRow
                   key={asset.id}
@@ -211,6 +222,7 @@ export default function MarketGrid() {
                   initialIsStarred={!!watchlist[asset.id]}
                   initialWatchlistId={watchlist[asset.id]}
                   ageMs={ageMs}
+                  index={index}
                 />
               )
             })

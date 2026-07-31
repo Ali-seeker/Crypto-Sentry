@@ -47,7 +47,7 @@ export default function Sidebar() {
             >
               <Icon 
                 size={20} 
-                className={isActive ? "text-binance-yellow" : "text-white/40 group-hover:text-white/80 transition-colors"} 
+                className={`transition-all duration-300 ${isActive ? "text-binance-yellow" : "text-white/40 group-hover:text-white/80 group-hover:scale-110 group-hover:rotate-3"}`} 
               />
               {link.name}
               {isActive && (
@@ -66,9 +66,9 @@ export default function Sidebar() {
         {session ? (
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-white/60 hover:bg-status-down/10 hover:text-status-down transition-all duration-200 group"
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-lg text-white/60 hover:bg-status-down/15 hover:text-status-down transition-all duration-300 group"
           >
-            <LogOut size={20} className="text-white/40 group-hover:text-status-down transition-colors" />
+            <LogOut size={20} className="text-white/40 group-hover:text-status-down transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3" />
             Sign Out
           </button>
         ) : (

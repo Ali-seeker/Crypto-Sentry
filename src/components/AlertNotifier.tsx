@@ -62,6 +62,7 @@ export default function AlertNotifier() {
             initial={{ opacity: 0, x: 50, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 50, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className={`pointer-events-auto relative p-4 rounded-xl border backdrop-blur-md shadow-2xl flex items-start gap-3 ${
               toast.alert_type === "SPIKE"
                 ? "bg-status-up/10 border-status-up/30"
@@ -74,16 +75,24 @@ export default function AlertNotifier() {
             >
               <X size={14} />
             </button>
-            <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                toast.alert_type === "SPIKE" ? "bg-status-up/20" : "bg-status-down/20"
-              }`}
-            >
-              {toast.alert_type === "SPIKE" ? (
-                <TrendingUp size={18} className="text-status-up" />
-              ) : (
-                <TrendingDown size={18} className="text-status-down" />
-              )}
+            <div className="relative">
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 relative z-10 ${
+                  toast.alert_type === "SPIKE" ? "bg-status-up/20" : "bg-status-down/20"
+                }`}
+              >
+                {toast.alert_type === "SPIKE" ? (
+                  <TrendingUp size={18} className="text-status-up" />
+                ) : (
+                  <TrendingDown size={18} className="text-status-down" />
+                )}
+              </div>
+              <motion.div
+                initial={{ scale: 0.5, opacity: 1 }}
+                animate={{ scale: 2.5, opacity: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className={`absolute inset-0 rounded-full ${toast.alert_type === "SPIKE" ? "bg-status-up" : "bg-status-down"}`}
+              />
             </div>
             <div className="flex-1 pr-4">
               <h4 className="font-bold text-white text-sm">

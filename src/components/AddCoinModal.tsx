@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Search, X, Loader2, Plus, Check } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function AddCoinModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("")
@@ -59,11 +60,22 @@ export default function AddCoinModal({ isOpen, onClose }: { isOpen: boolean; onC
     }
   }
 
-  if (!isOpen) return null
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg bg-[#1E2329] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        >
+          <motion.div 
+            initial={{ scale: 0.95, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.95, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="w-full max-w-lg bg-[#1E2329] border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+          >
         {/* Header */}
         <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
           <h2 className="text-xl font-bold text-white">Add New Coin</h2>
@@ -140,7 +152,9 @@ export default function AddCoinModal({ isOpen, onClose }: { isOpen: boolean; onC
             </>
           )}
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }

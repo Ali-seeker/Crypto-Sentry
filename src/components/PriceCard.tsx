@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useSession } from "next-auth/react"
 import { useWatchlistAction } from "@/hooks/useWatchlist"
 import { useEffect, useRef, useState } from "react"
+import AnimatedNumber from "./AnimatedNumber"
 
 interface PriceCardProps {
   asset_id: string
@@ -16,6 +17,7 @@ interface PriceCardProps {
   initialIsStarred?: boolean
   initialWatchlistId?: string
   ageMs?: number | null
+  index?: number
 }
 
 export default function PriceCard({
@@ -29,6 +31,7 @@ export default function PriceCard({
   initialWatchlistId,
   alert_type,
   ageMs,
+  index = 0,
 }: PriceCardProps) {
   const { data: session } = useSession()
   const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
@@ -83,13 +86,23 @@ export default function PriceCard({
 
   return (
     <motion.div
-      initial={false}
-      animate={{
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
         borderColor: isAlert ? `rgba(${alertRgb}, 0.4)` : "rgba(255, 255, 255, 0.1)",
-        backgroundColor: isAlert ? `rgba(${alertRgb}, 0.1)` : "rgba(30, 35, 41, 0.6)"
+        backgroundColor: isAlert ? `rgba(${alertRgb}, 0.1)` : "rgba(30, 35, 41, 0.6)",
+        boxShadow: isAlert ? `0 0 20px rgba(${alertRgb}, 0.2)` : "none"
       }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="relative p-4 rounded-xl border overflow-hidden transition-all duration-300 backdrop-blur-md"
+      whileHover={{ y: -4, scale: 1.02 }}
+      transition={{ 
+        duration: 0.4, 
+        ease: "easeOut",
+        delay: index * 0.05,
+        borderColor: { duration: 0.5 },
+        backgroundColor: { duration: 0.5 }
+      }}
+      className="relative p-4 rounded-xl border overflow-hidden backdrop-blur-md"
     >
       <AnimatePresence>
         {isAlert && (
@@ -97,8 +110,18 @@ export default function PriceCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-            className={`absolute inset-0 pointer-events-none ${isSpike ? "bg-status-up/5" : "bg-status-down/5"}`}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut", repeatType: "reverse" }}
+            className={`absolute inset-0 pointer-events-none ${isSpike ? "bg-status-up/10" : "bg-status-down/10"}`}
+          />
+        )}
+        {flashColor && (
+          <motion.div
+            key="flash"
+            initial={{ opacity: 0.3 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className={`absolute inset-0 pointer-events-none ${flashColor === "up" ? "bg-status-up" : "bg-status-down"}`}
           />
         )}
       </AnimatePresence>
@@ -123,15 +146,16 @@ export default function PriceCard({
             <div className="flex items-center gap-2">
               <h3 className="font-bold text-lg leading-tight truncate">{asset_name}</h3>
               {initialWatchlistId !== undefined && (
-                <button 
+                <motion.button 
                   onClick={toggleStar}
+                  whileTap={{ scale: 1.5 }}
                   className="hover:scale-110 transition-transform flex-shrink-0"
                 >
                   <Star 
                     size={16} 
                     className={isStarred ? "fill-binance-yellow text-binance-yellow" : "text-white/30"} 
                   />
-                </button>
+                </motion.button>
               )}
             </div>
           </div>
@@ -142,16 +166,9 @@ export default function PriceCard({
       </div>
 
       <div className="flex items-end justify-between relative z-10">
-        <motion.div
-          animate={{
-            color: flashColor === "up" ? "#0ECB81" : flashColor === "down" ? "#F6465D" : "#FFFFFF"
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <p className="text-2xl font-bold font-mono leading-none">
-            ${(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
-          </p>
-        </motion.div>
+        <div className="text-2xl font-bold font-mono leading-none">
+          $<AnimatedNumber value={(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })} />
+        </div>
         <div
           className={`flex items-center gap-1 font-semibold ${
             (usd_24h_change || 0) >= 0 ? "text-status-up" : "text-status-down"

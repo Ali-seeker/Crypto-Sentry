@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import PriceCard from "./PriceCard"
+import Skeleton from "./Skeleton"
 
 // Assuming a predefined list since the backend might only return alert history as a fallback,
 // which wouldn't contain all 10 assets if they haven't crashed.
@@ -89,7 +90,7 @@ export default function LivePriceGrid() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-32 bg-bg-card/40 border border-white/5 rounded-xl animate-pulse" />
+          <Skeleton key={i} className="h-32 rounded-xl" />
         ))}
       </div>
     )
@@ -123,7 +124,7 @@ export default function LivePriceGrid() {
             </a>
           </div>
         ) : (
-          watchlistEntries.map(([assetId, watchlistId]) => {
+          watchlistEntries.map(([assetId, watchlistId], index) => {
             const priceData = data?.[assetId]
             
             if (!priceData) {
@@ -151,6 +152,7 @@ export default function LivePriceGrid() {
                 initialIsStarred={true}
                 initialWatchlistId={watchlistId}
                 ageMs={ageMs}
+                index={index}
               />
             )
           })
