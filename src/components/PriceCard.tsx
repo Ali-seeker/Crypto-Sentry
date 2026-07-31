@@ -130,16 +130,16 @@ export default function PriceCard({
           transition={{ duration: 0.3 }}
         >
           <p className="text-2xl font-bold font-mono leading-none">
-            ${usd.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
+            ${(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
           </p>
         </motion.div>
         <div
           className={`flex items-center gap-1 font-semibold ${
-            usd_24h_change >= 0 ? "text-status-up" : "text-status-down"
+            (usd_24h_change || 0) >= 0 ? "text-status-up" : "text-status-down"
           }`}
         >
-          {usd_24h_change >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-          <span className="text-sm">{Math.abs(usd_24h_change).toFixed(2)}%</span>
+          {(usd_24h_change || 0) >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+          <span className="text-sm">{Math.abs(usd_24h_change || 0).toFixed(2)}%</span>
         </div>
       </div>
       

@@ -1,10 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search } from "lucide-react"
+import { Search, Plus } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useWatchlistAction } from "@/hooks/useWatchlist"
 import { Star, TrendingUp, TrendingDown } from "lucide-react"
+import AddCoinModal from "./AddCoinModal"
 
 // A simplified row component specifically for the market page
 function MarketRow({ 
@@ -53,19 +54,19 @@ function MarketRow({
             </div>
           )}
           <div>
-            <h4 className="font-bold text-white text-lg">{asset_name}</h4>
+            <h4 className="font-bold text-white text-lg capitalize">{asset_name}</h4>
             <span className="text-xs text-white/40 uppercase tracking-widest">{asset_id}</span>
           </div>
         </div>
       </div>
 
       <div className="w-1/3 text-right font-mono text-lg font-bold">
-        ${usd.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
+        ${(usd || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
       </div>
 
-      <div className={`w-1/3 flex items-center justify-end gap-1 font-semibold ${isUp ? "text-status-up" : "text-status-down"}`}>
-        {isUp ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
-        <span>{Math.abs(usd_24h_change).toFixed(2)}%</span>
+      <div className={`w-1/3 flex items-center justify-end gap-1 font-semibold ${(usd_24h_change || 0) >= 0 ? "text-status-up" : "text-status-down"}`}>
+        {(usd_24h_change || 0) >= 0 ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
+        <span>{Math.abs(usd_24h_change || 0).toFixed(2)}%</span>
       </div>
     </div>
   )
@@ -78,6 +79,7 @@ export default function MarketGrid() {
   const [isStale, setIsStale] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [ageMs, setAgeMs] = useState(0)
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   
   const [watchlist, setWatchlist] = useState<Record<string, string>>({})
   const { data: session } = useSession()
@@ -153,16 +155,25 @@ export default function MarketGrid() {
 
   return (
     <div className="space-y-6">
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
-        <input 
-          id="market-search"
-          type="text" 
-          placeholder="Search by coin name or symbol..." 
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-[#1E2329]/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-binance-yellow/50 transition-colors"
-        />
+      <div className="flex gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
+          <input 
+            id="market-search"
+            type="text" 
+            placeholder="Search by coin name or symbol..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-[#1E2329]/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-binance-yellow/50 transition-colors"
+          />
+        </div>
+        <button 
+          onClick={() => setIsAddModalOpen(true)}
+          className="bg-binance-yellow text-bg-dark font-bold px-6 py-4 rounded-xl flex items-center gap-2 hover:bg-binance-yellow/90 transition-colors shrink-0"
+        >
+          <Plus size={20} />
+          Add Coin
+        </button>
       </div>
 
       {isStale && (
@@ -205,6 +216,11 @@ export default function MarketGrid() {
           )}
         </div>
       )}
+      
+      <AddCoinModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+      />
     </div>
   )
 }

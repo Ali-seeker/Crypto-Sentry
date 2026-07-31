@@ -15,7 +15,17 @@ const serverStartTime = Date.now()
 
 async function pollMarketData() {
   try {
-    const rawData = await fetchMarketData()
+    const monitored = await prisma.monitoredAsset.findMany({
+      select: { asset_id: true },
+    })
+    const allIds = monitored.map((a) => a.asset_id)
+    
+    if (allIds.length === 0) {
+      logger.info("SurveillanceEngine", "No monitored assets found in DB")
+      return
+    }
+
+    const rawData = await fetchMarketData(allIds)
     const alerts = detector.checkForCrashes(rawData)
 
     // Write alerts to DB

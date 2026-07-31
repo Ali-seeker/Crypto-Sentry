@@ -43,3 +43,10 @@ model CryptoAlert {
   @@index([asset_id, detected_at])
   @@index([detected_at])
 }
+
+model MonitoredAsset {
+  id         String    @id @default(cuid())
+  asset_id   String    @unique
+  added_by   String?
+  added_at   DateTime  @default(now())
+}

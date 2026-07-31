@@ -1,16 +1,4 @@
 import { logger } from "@/lib/logger"
-export const MONITORED_ASSET_IDS = [
-  "bitcoin", "ethereum", "tether", "binancecoin", "solana",
-  "ripple", "usd-coin", "cardano", "dogecoin", "tron",
-  "avalanche-2", "chainlink", "polkadot", "matic-network", "litecoin",
-  "shiba-inu", "bitcoin-cash", "uniswap", "internet-computer", "ethereum-classic",
-  "stellar", "monero", "okb", "cosmos", "hedera-hashgraph",
-  "filecoin", "aptos", "crypto-com-chain", "near", "vechain",
-  "arbitrum", "optimism", "maker", "quant-network", "algorand",
-  "the-graph", "fantom", "tezos", "theta-token", "elrond-erd-2",
-  "eos", "flow", "axie-infinity", "aave", "pancakeswap-token",
-  "decentraland", "the-sandbox", "chiliz", "gala", "kucoin-shares"
-]
 
 export interface CoinGeckoResponse {
   [key: string]: {
@@ -21,10 +9,10 @@ export interface CoinGeckoResponse {
   }
 }
 
-export async function fetchMarketData(): Promise<CoinGeckoResponse> {
+export async function fetchMarketData(assetIds: string[]): Promise<CoinGeckoResponse> {
   const COINGECKO_API_URL = "https://api.coingecko.com/api/v3"
   const apiKey = process.env.COINGECKO_API_KEY
-  let url = `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&ids=${MONITORED_ASSET_IDS.join(",")}`
+  let url = `${COINGECKO_API_URL}/coins/markets?vs_currency=usd&ids=${assetIds.join(",")}`
   
   if (apiKey) {
     url += `&x_cg_demo_api_key=${apiKey}`
