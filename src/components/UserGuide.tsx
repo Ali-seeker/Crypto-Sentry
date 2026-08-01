@@ -91,6 +91,7 @@ export default function UserGuide() {
     
     // Check if we need to change routes
     if (pathname !== step.route) {
+      setTargetRect(null)
       router.push(step.route)
       // wait for navigation before trying to find the element
       return
@@ -101,7 +102,18 @@ export default function UserGuide() {
       const element = document.getElementById(step.targetId)
       if (element) {
         const rect = element.getBoundingClientRect()
-        setTargetRect(rect)
+        setTargetRect(prev => {
+          if (!prev) return rect
+          if (
+            Math.abs(prev.left - rect.left) < 1 &&
+            Math.abs(prev.top - rect.top) < 1 &&
+            Math.abs(prev.width - rect.width) < 1 &&
+            Math.abs(prev.height - rect.height) < 1
+          ) {
+            return prev
+          }
+          return rect
+        })
       } else {
         // Element not found (maybe still rendering, or skeleton active)
         // We can just skip this step gracefully if it never appears, but a small polling helps

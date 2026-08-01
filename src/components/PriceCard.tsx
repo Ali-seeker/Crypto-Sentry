@@ -147,6 +147,7 @@ export default function PriceCard({
               <h3 className="font-bold text-lg leading-tight truncate">{asset_name}</h3>
               {initialWatchlistId !== undefined && (
                 <motion.button 
+                  id={index === 0 ? "watchlist-star" : undefined}
                   onClick={toggleStar}
                   whileTap={{ scale: 1.5 }}
                   className="hover:scale-110 transition-transform flex-shrink-0"
