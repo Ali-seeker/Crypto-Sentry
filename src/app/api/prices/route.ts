@@ -15,7 +15,8 @@ export async function GET(req: Request) {
 
     let liveData
     try {
-      const response = await fetch("http://localhost:4000/cache", {
+      const engineUrl = process.env.ENGINE_URL || "http://localhost:4000"
+      const response = await fetch(`${engineUrl}/cache`, {
         signal: controller.signal,
         cache: "no-store", // Don't cache on Next.js side
       })
