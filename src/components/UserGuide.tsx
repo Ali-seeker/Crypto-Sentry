@@ -19,7 +19,7 @@ const TOUR_STEPS = [
   {
     targetId: "watchlist-star",
     content: "Starring adds assets to your personal watchlist.",
-    route: "/dashboard",
+    route: "/market",
   },
   {
     targetId: "market-search",

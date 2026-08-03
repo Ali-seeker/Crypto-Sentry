@@ -37,6 +37,7 @@ function MarketRow({
       <div className="flex items-center gap-4 w-1/3">
         {session && (
           <motion.button
+            id={index === 0 ? "watchlist-star" : undefined}
             onClick={(e) => {
               e.preventDefault()
               toggleStar(asset_id, asset_name)
