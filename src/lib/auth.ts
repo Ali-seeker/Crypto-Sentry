@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
       }
       return true
     },
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, trigger, session, account }) {
       if (trigger === "update") {
         if (session?.guide_completed !== undefined) {
           token.guide_completed = session.guide_completed
@@ -85,17 +85,26 @@ export const authOptions: NextAuthOptions = {
       }
       
       if (user) {
-        token.id = user.id
-        token.guide_completed = (user as any).guide_completed
+        if (account?.provider === "google" && user.email) {
+          try {
+            const dbUser = await prisma.user.findUnique({ where: { email: user.email } })
+            if (dbUser) {
+              token.id = dbUser.id
+              token.guide_completed = dbUser.guide_completed
+            }
+          } catch (e) {}
+        } else {
+          token.id = user.id
+          token.guide_completed = (user as any).guide_completed
+        }
       }
       
-      // If we don't have guide_completed in token yet (e.g. from Google Auth or first load),
-      // we should fetch it from DB just once if possible, or assume false for now.
-      // But since user is only present on first signin, let's just make sure it's set.
-      if (token.guide_completed === undefined && token.email) {
+      // Fallback if token.id is missing or still Google ID, or guide_completed is undefined
+      if ((token.guide_completed === undefined || !token.id) && token.email) {
         try {
           const dbUser = await prisma.user.findUnique({ where: { email: token.email } })
           if (dbUser) {
+            token.id = dbUser.id
             token.guide_completed = dbUser.guide_completed
           }
         } catch (e) {}
