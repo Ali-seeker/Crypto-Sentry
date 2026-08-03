@@ -49,6 +49,27 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google" && user.email) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: user.email },
+          })
+          if (!dbUser) {
+            await prisma.user.create({
+              data: {
+                email: user.email,
+                password_hash: "google_oauth",
+              },
+            })
+          }
+        } catch (error) {
+          console.error("Error saving Google user:", error)
+          return false
+        }
+      }
+      return true
+    },
     async jwt({ token, user, trigger, session }) {
       if (trigger === "update") {
         if (session?.guide_completed !== undefined) {
