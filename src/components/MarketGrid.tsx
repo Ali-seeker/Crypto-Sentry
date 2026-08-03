@@ -6,7 +6,7 @@ import { Search, Plus } from "lucide-react"
 import { useSession } from "next-auth/react"
 import { useWatchlistAction } from "@/hooks/useWatchlist"
 import { Star, TrendingUp, TrendingDown } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import AddCoinModal from "./AddCoinModal"
 import AnimatedNumber from "./AnimatedNumber"
 import Skeleton from "./Skeleton"
@@ -21,9 +21,8 @@ function MarketRow({
   initialIsStarred,
   initialWatchlistId,
   index = 0
-}: any) {
+}: { asset_id: string; asset_name: string; usd: number; usd_24h_change: number; image: string; initialIsStarred: boolean; initialWatchlistId: string; index?: number }) {
   const { data: session } = useSession()
-  const isUp = usd_24h_change >= 0
   const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
   const [imgError, setImgError] = useState(false)
 
@@ -54,6 +53,7 @@ function MarketRow({
         )}
         <div className="flex items-center gap-3">
           {image && !imgError ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img 
               src={image} 
               alt={asset_name} 
@@ -85,7 +85,7 @@ function MarketRow({
 }
 
 export default function MarketGrid() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<Record<string, {name: string, usd: number, usd_24h_change: number, image: string, status: "stable" | "alert", alert_type?: "CRASH" | "SPIKE"}> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isStale, setIsStale] = useState(false)
@@ -103,7 +103,7 @@ export default function MarketGrid() {
       if (res.ok) {
         const items = await res.json()
         const wlMap: Record<string, string> = {}
-        items.forEach((item: any) => {
+        items.forEach((item: {asset_id: string; id: string}) => {
           wlMap[item.asset_id] = item.id
         })
         setWatchlist(wlMap)
@@ -123,8 +123,8 @@ export default function MarketGrid() {
       setIsStale(result.stale)
       setAgeMs(result.ageMs)
       setError(null)
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred")
     } finally {
       setLoading(false)
     }
@@ -135,6 +135,7 @@ export default function MarketGrid() {
     fetchData()
     const interval = setInterval(fetchData, 5000)
     return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   if (error && !data) {
@@ -152,7 +153,7 @@ export default function MarketGrid() {
     )
   }
 
-  const marketAssets = data ? Object.entries(data).map(([id, info]: [string, any]) => ({
+  const marketAssets = data ? Object.entries(data).map(([id, info]: [string, {name?: string, usd: number, usd_24h_change: number, image: string}]) => ({
     id,
     name: info.name || id,
     usd: info.usd,
@@ -209,7 +210,7 @@ export default function MarketGrid() {
       ) : (
         <div className="space-y-3">
           {filteredAssets.length === 0 ? (
-            <div className="text-center py-10 text-white/40">No assets found matching "{searchQuery}"</div>
+            <div className="text-center py-10 text-white/40">No assets found matching &quot;{searchQuery}&quot;</div>
           ) : (
             filteredAssets.map((asset, index) => {
               return (

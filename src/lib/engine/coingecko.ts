@@ -33,7 +33,7 @@ export async function fetchMarketData(assetIds: string[]): Promise<CoinGeckoResp
   return formatted
 }
 
-async function fetchWithRetry(url: string, retries = 3, attempt = 0): Promise<any[]> {
+async function fetchWithRetry(url: string, retries = 3, attempt = 0): Promise<unknown[]> {
   try {
     const response = await fetch(url)
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { TrendingDown, TrendingUp } from "lucide-react"
 
 export default function MarketOverview() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<{totalMarketCap: number, totalVolume: number, marketCapChange24h: number, error?: string} | null>(null)
   
   useEffect(() => {
     fetch("/api/market-overview")

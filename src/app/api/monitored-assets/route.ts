@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth"
 import prisma from "@/lib/prisma"
 
 export async function POST(req: Request) {
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json({ success: true, message: "Asset added to surveillance engine" })
-  } catch (error: any) {
+  } catch (error) {
     console.error("Monitored Asset Error:", error)
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }

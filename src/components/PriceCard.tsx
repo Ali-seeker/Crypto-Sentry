@@ -1,7 +1,6 @@
 "use client"
 import { TrendingUp, TrendingDown, Star } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useSession } from "next-auth/react"
 import { useWatchlistAction } from "@/hooks/useWatchlist"
 import { useEffect, useRef, useState } from "react"
 import AnimatedNumber from "./AnimatedNumber"
@@ -33,7 +32,6 @@ export default function PriceCard({
   ageMs,
   index = 0,
 }: PriceCardProps) {
-  const { data: session } = useSession()
   const { isStarred, toggleStar } = useWatchlistAction(initialIsStarred, initialWatchlistId)
   const isAlert = status === "alert"
   const isSpike = alert_type === "SPIKE"
@@ -77,12 +75,6 @@ export default function PriceCard({
     }, 500)
     return () => clearTimeout(timeout)
   }, [usd])
-
-  const handleStarClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    toggleStar(asset_id, asset_name)
-  }
 
   return (
     <motion.div
@@ -130,6 +122,7 @@ export default function PriceCard({
         <div className="flex items-center gap-3 relative z-10 min-w-0 flex-1 pr-2">
           <div className="w-8 h-8 rounded-full overflow-hidden bg-white/10 flex-shrink-0">
             {!imgError && image ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img 
                 src={image} 
                 alt={asset_name} 

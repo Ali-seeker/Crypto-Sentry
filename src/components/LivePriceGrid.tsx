@@ -8,21 +8,10 @@ import Skeleton from "./Skeleton"
 // Assuming a predefined list since the backend might only return alert history as a fallback,
 // which wouldn't contain all 10 assets if they haven't crashed.
 // But we want to render skeleton cards.
-const ASSETS_LIST = [
-  { id: "bitcoin", name: "Bitcoin" },
-  { id: "ethereum", name: "Ethereum" },
-  { id: "tether", name: "Tether" },
-  { id: "binancecoin", name: "BNB" },
-  { id: "ripple", name: "XRP" },
-  { id: "usd-coin", name: "USDC" },
-  { id: "solana", name: "Solana" },
-  { id: "tron", name: "TRON" },
-  { id: "cardano", name: "Cardano" },
-  { id: "polkadot", name: "Polkadot" },
-]
+// Removed ASSETS_LIST as it was unused
 
 export default function LivePriceGrid() {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<Record<string, {name: string, usd: number, usd_24h_change: number, image: string, status: "stable" | "alert", alert_type?: "CRASH" | "SPIKE"}> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isStale, setIsStale] = useState(false)
@@ -37,7 +26,7 @@ export default function LivePriceGrid() {
       if (res.ok) {
         const items = await res.json()
         const wlMap: Record<string, string> = {}
-        items.forEach((item: any) => {
+        items.forEach((item: {asset_id: string; id: string}) => {
           wlMap[item.asset_id] = item.id
         })
         setWatchlist(wlMap)
@@ -57,8 +46,8 @@ export default function LivePriceGrid() {
       setIsStale(result.stale)
       setAgeMs(result.ageMs)
       setError(null)
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred")
     } finally {
       setLoading(false)
     }
@@ -69,6 +58,7 @@ export default function LivePriceGrid() {
     fetchData()
     const interval = setInterval(fetchData, 5000)
     return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   if (error && !data) {

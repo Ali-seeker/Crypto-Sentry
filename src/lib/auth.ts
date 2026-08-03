@@ -80,7 +80,9 @@ export const authOptions: NextAuthOptions = {
             if (dbUser) {
               token.guide_completed = dbUser.guide_completed
             }
-          } catch (e) {}
+          } catch {
+            // Ignored error
+          }
         }
       }
       
@@ -92,10 +94,12 @@ export const authOptions: NextAuthOptions = {
               token.id = dbUser.id
               token.guide_completed = dbUser.guide_completed
             }
-          } catch (e) {}
+          } catch {
+            // Ignored error
+          }
         } else {
           token.id = user.id
-          token.guide_completed = (user as any).guide_completed
+          token.guide_completed = (user as { guide_completed?: boolean }).guide_completed
         }
       }
       
@@ -107,15 +111,18 @@ export const authOptions: NextAuthOptions = {
             token.id = dbUser.id
             token.guide_completed = dbUser.guide_completed
           }
-        } catch (e) {}
+        } catch {
+          // Ignored error
+        }
       }
 
       return token
     },
     async session({ session, token }) {
       if (session.user && token.id) {
-        (session.user as any).id = token.id
-        ;(session.user as any).guide_completed = token.guide_completed
+        const sessionUser = session.user as { id?: string; guide_completed?: boolean };
+        sessionUser.id = token.id as string
+        sessionUser.guide_completed = token.guide_completed as boolean | undefined
       }
       return session
     },

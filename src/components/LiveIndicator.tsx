@@ -16,7 +16,7 @@ export default function LiveIndicator() {
         } else {
           setStale(true)
         }
-      } catch (e) {
+      } catch {
         setStale(true)
       }
     }

@@ -1,3 +1,5 @@
+import { logger } from "../logger"
+
 export interface AlertRecord {
   asset_id: string
   asset_name: string
@@ -45,7 +47,7 @@ export class FlashCrashDetector {
       const dropPct = ((currentPrice - baselinePrice) / baselinePrice) * 100
 
       // Debug log (used to verify math and for the debug endpoint to trigger)
-      console.log(`[FlashCrashDetector] ${this.getAssetName(asset_id)}: ${currentPrice} USD (Change: ${dropPct.toFixed(4)}%)`)
+      logger.info("FlashCrashDetector", `${this.getAssetName(asset_id)}: ${currentPrice} USD (Change: ${dropPct.toFixed(4)}%)`)
 
       const THRESHOLD = parseFloat(process.env.CRASH_THRESHOLD_PCT || "2.0")
       let alertType: "CRASH" | "SPIKE" | null = null

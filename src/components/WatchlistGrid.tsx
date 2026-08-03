@@ -13,7 +13,7 @@ interface WatchlistGridProps {
 }
 
 export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<Record<string, {name: string, usd: number, usd_24h_change: number, image: string, status: "stable" | "alert", alert_type?: "CRASH" | "SPIKE"}> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [isStale, setIsStale] = useState(false)
@@ -37,8 +37,8 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
       setIsStale(result.stale)
       setAgeMs(result.ageMs)
       setError(null)
-    } catch (err: any) {
-      setError(err.message || "An unexpected error occurred")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An unexpected error occurred")
     } finally {
       setLoading(false)
     }
@@ -48,6 +48,7 @@ export default function WatchlistGrid({ initialWatchlist }: WatchlistGridProps) 
     fetchData()
     const interval = setInterval(fetchData, 5000)
     return () => clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialWatchlist])
 
   if (error && !data) {

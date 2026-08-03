@@ -13,6 +13,21 @@ const detector = new FlashCrashDetector()
 let lastFetchSuccess = false
 const serverStartTime = Date.now()
 
+async function executeWithRetry<T>(operation: () => Promise<T>, maxRetries = 2, delayMs = 500): Promise<T> {
+  let retryCount = 0;
+  while (true) {
+    try {
+      return await operation();
+    } catch (error) {
+      retryCount++;
+      if (retryCount >= maxRetries) {
+        throw error;
+      }
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
+  }
+}
+
 async function pollMarketData() {
   try {
     const monitored = await prisma.monitoredAsset.findMany({
@@ -39,11 +54,8 @@ async function pollMarketData() {
 
     // Write alerts to DB
     for (const alert of alerts) {
-      let retryCount = 0;
-      let success = false;
-      
-      while (retryCount < 2 && !success) {
-        try {
+      try {
+        await executeWithRetry(async () => {
           await prisma.cryptoAlert.create({
             data: {
               asset_id: alert.asset_id,
@@ -53,19 +65,12 @@ async function pollMarketData() {
               alert_type: alert.alert_type,
             },
           })
-          success = true;
-        } catch (dbError: any) {
-          retryCount++;
-          if (retryCount >= 2) {
-            logger.error("SurveillanceEngine", "Failed to write alert", { 
-              asset_id: alert.asset_id, 
-              error: dbError.message 
-            })
-          } else {
-            // Wait 500ms before retrying
-            await new Promise(resolve => setTimeout(resolve, 500))
-          }
-        }
+        })
+      } catch (dbError: unknown) {
+        logger.error("SurveillanceEngine", "Failed to write alert", { 
+          asset_id: alert.asset_id, 
+          error: dbError instanceof Error ? dbError.message : String(dbError) 
+        })
       }
     }
 

@@ -5,11 +5,11 @@ interface LogEntry {
   level: LogLevel
   component: string
   message: string
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 }
 
 class Logger {
-  private log(level: LogLevel, component: string, message: string, context?: Record<string, any>) {
+  private log(level: LogLevel, component: string, message: string, context?: Record<string, unknown>) {
     const entry: LogEntry = {
       timestamp: new Date().toISOString(),
       level,
@@ -36,19 +36,19 @@ class Logger {
     }
   }
 
-  info(component: string, message: string, context?: Record<string, any>) {
+  info(component: string, message: string, context?: Record<string, unknown>) {
     this.log('INFO', component, message, context)
   }
 
-  warn(component: string, message: string, context?: Record<string, any>) {
+  warn(component: string, message: string, context?: Record<string, unknown>) {
     this.log('WARN', component, message, context)
   }
 
-  error(component: string, message: string, context?: Record<string, any>) {
+  error(component: string, message: string, context?: Record<string, unknown>) {
     this.log('ERROR', component, message, context)
   }
 
-  fatal(component: string, message: string, context?: Record<string, any>) {
+  fatal(component: string, message: string, context?: Record<string, unknown>) {
     this.log('FATAL', component, message, context)
   }
 }
