@@ -1,0 +1,373 @@
+
+> bitbash-crypto-sentry@0.1.0 dev:all
+> concurrently "npm run server" "npm run dev"
+
+[0] 
+[0] > bitbash-crypto-sentry@0.1.0 server
+[0] > tsx --env-file=.env server.ts
+[0] 
+[1] 
+[1] > bitbash-crypto-sentry@0.1.0 dev
+[1] > next dev
+[1] 
+[0] {"timestamp":"2026-08-04T08:17:25.975Z","level":"INFO","component":"SurveillanceEngine","message":"Surveillance engine running on port 4000"}
+[0] {"timestamp":"2026-08-04T08:17:25.978Z","level":"INFO","component":"SurveillanceEngine","message":"Debug endpoint available at POST /debug/simulate-crash"}
+[1]   ▲ Next.js 14.2.35
+[1]   - Local:        http://localhost:3000
+[1]   - Environments: .env
+[1] 
+[1]  ✓ Starting...
+[0] {"timestamp":"2026-08-04T08:17:27.861Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"runtime 0.50%"}}
+[1]  ✓ Ready in 6.3s
+[0] {"timestamp":"2026-08-04T08:17:56.559Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63572 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.559Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1860.24 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.559Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999059 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.559Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.69 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999517 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.076 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.46 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329154 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070124 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 485.9 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194104 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.25 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.560Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170768 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.17 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.2 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070843 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054633 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.75 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.66 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.833612 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.85 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090386 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.38 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.717556 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082454 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578805 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.561Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.0047117 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199464 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.08879 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01471358 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.828002 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272155 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067933 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.12892 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04202374 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.0018025 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.02629589 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065015 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.78 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101992 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.562Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:17:56.656Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"runtime 0.50%"}}
+[1]  ○ Compiling / ...
+[1]  ✓ Compiled / in 13.5s (588 modules)
+[1]  GET / 307 in 14679ms
+[1]  ✓ Compiled in 1347ms (282 modules)
+[1]  ○ Compiling /login ...
+[0] {"timestamp":"2026-08-04T08:18:26.550Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63572 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.550Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1860.24 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.550Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999059 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.550Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.69 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.550Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999517 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.076 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.46 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329154 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070124 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 485.9 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194104 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.25 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170768 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.17 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.2 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070843 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.551Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054633 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.75 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.66 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.833612 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.85 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090386 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.38 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.717556 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.552Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082454 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578805 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.0047117 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199464 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.08879 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01471358 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.828002 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272155 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067933 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.12892 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04202374 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.0018025 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.02629589 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.553Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065015 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.554Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.78 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.554Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101992 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.554Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:26.632Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"runtime 0.50%"}}
+[1]  ✓ Compiled /dashboard in 21.9s (1581 modules)
+[1]  GET /dashboard 200 in 13106ms
+[1]  ○ Compiling /market ...
+[1]  ✓ Compiled /market in 1594ms (1602 modules)
+[1]  GET /market 200 in 2035ms
+[1]  ○ Compiling /watchlist ...
+[1]  ✓ Compiled /watchlist in 3s (1850 modules)
+[1]  GET /watchlist 307 in 3912ms
+[1]  GET /login 200 in 231ms
+[1]  ○ Compiling /alerts ...
+[1]  ✓ Compiled /alerts in 1268ms (1865 modules)
+[1]  GET /alerts 307 in 2005ms
+[1]  GET /login 200 in 117ms
+[1]  ○ Compiling /settings ...
+[1]  ✓ Compiled /settings in 1175ms (1878 modules)
+[1]  GET /settings 200 in 1512ms
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63558 USD (Change: -0.0220%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1859.97 USD (Change: -0.0145%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999072 USD (Change: 0.0013%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.74 USD (Change: 0.0085%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999518 USD (Change: 0.0001%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.075 USD (Change: -0.0929%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.783Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.44 USD (Change: -0.0272%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329157 USD (Change: 0.0009%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070116 USD (Change: -0.0114%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 486.47 USD (Change: 0.1173%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194027 USD (Change: -0.0397%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.26 USD (Change: 0.0027%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170779 USD (Change: 0.0064%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.19 USD (Change: 0.0094%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.19 USD (Change: -0.0226%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070846 USD (Change: 0.0042%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054627 USD (Change: -0.0110%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.784Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.75 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.67 USD (Change: 0.0108%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.833722 USD (Change: 0.0132%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.86 USD (Change: 0.0167%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090322 USD (Change: -0.0708%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.37 USD (Change: -0.7246%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.717556 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082436 USD (Change: -0.0218%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.785Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578663 USD (Change: -0.0245%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.00471027 USD (Change: -0.0303%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199448 USD (Change: -0.0080%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.088718 USD (Change: -0.0811%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01469381 USD (Change: -0.1344%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.827826 USD (Change: -0.0213%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272707 USD (Change: 0.0434%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067899 USD (Change: -0.0500%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.128946 USD (Change: 0.0202%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04201441 USD (Change: -0.0222%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.00180184 USD (Change: -0.0366%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.0262967 USD (Change: 0.0031%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065014 USD (Change: -0.0015%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.47 USD (Change: -0.0205%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.786Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101961 USD (Change: -0.0015%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.787Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:18:56.866Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"runtime 0.50%"}}
+[1]  ○ Compiling /profile ...
+[1]  ✓ Compiled /profile in 2.6s (1909 modules)
+[1]  GET /profile 307 in 3121ms
+[1]  GET /login 200 in 310ms
+[1]  GET /login 200 in 154ms
+[1]  ○ Compiling /signup ...
+[1]  ✓ Compiled /signup in 1699ms (1915 modules)
+[1]  GET /signup 200 in 2004ms
+[1]  ○ Compiling /api/settings/threshold ...
+[1]  ✓ Compiled /api/settings/threshold in 2.2s (1148 modules)
+[1]  GET /api/settings/threshold 200 in 2577ms
+[1]  GET / 307 in 226ms
+[0] {"timestamp":"2026-08-04T08:19:26.532Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63558 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.532Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1859.97 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999072 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.74 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999518 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.075 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.44 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329157 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070116 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 486.47 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194027 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.26 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170779 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.533Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.19 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.19 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070846 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054627 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.75 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.67 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.833722 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.86 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090322 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.534Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.37 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.717556 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082436 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578663 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.00471027 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199448 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.088718 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01469381 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.827826 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272707 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067899 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.128946 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04201441 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.535Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.00180184 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.0262967 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065014 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.47 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101961 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.536Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:26.621Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"runtime 0.50%"}}
+[1]  POST /api/settings/threshold 200 in 53ms
+[0] {"timestamp":"2026-08-04T08:19:56.922Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63561 USD (Change: 0.0047%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.923Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1859.7 USD (Change: -0.0145%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.923Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999065 USD (Change: -0.0007%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.923Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.68 USD (Change: -0.0102%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.923Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999521 USD (Change: 0.0003%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.923Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.075 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.924Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.43 USD (Change: -0.0136%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.924Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329134 USD (Change: -0.0070%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.924Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.924Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070127 USD (Change: 0.0157%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.924Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 486.51 USD (Change: 0.0082%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.925Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194137 USD (Change: 0.0567%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.925Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.55 USD (Change: 0.0796%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.925Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.925Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170847 USD (Change: 0.0398%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.925Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.08 USD (Change: -0.0516%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.926Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.2 USD (Change: 0.0226%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.926Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070909 USD (Change: 0.0889%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.926Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.926Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.926Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054621 USD (Change: -0.0110%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.927Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.927Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.74 USD (Change: -0.5714%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.927Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.927Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.67 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.927Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.832896 USD (Change: -0.0991%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.86 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090295 USD (Change: -0.0299%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.928Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.37 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.929Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.71758 USD (Change: 0.0033%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.929Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082444 USD (Change: 0.0097%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.929Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578434 USD (Change: -0.0396%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.929Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.929Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.00471003 USD (Change: -0.0051%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.930Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199456 USD (Change: 0.0040%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.930Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.088735 USD (Change: 0.0192%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.930Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01471546 USD (Change: 0.1473%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.930Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.827704 USD (Change: -0.0147%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.930Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272938 USD (Change: 0.0182%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.931Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067939 USD (Change: 0.0589%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.931Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.128872 USD (Change: -0.0574%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.931Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04197537 USD (Change: -0.0929%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.931Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.00180092 USD (Change: -0.0511%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.931Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.932Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.0263015 USD (Change: 0.0183%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.932Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065014 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.932Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.74 USD (Change: 0.0178%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.933Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101977 USD (Change: 0.0008%)"}
+[0] {"timestamp":"2026-08-04T08:19:56.933Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:19:57.033Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"default 2.0%"}}
+[0] {"timestamp":"2026-08-04T08:20:26.584Z","level":"INFO","component":"FlashCrashDetector","message":"Bitcoin: 63561 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"Ethereum: 1859.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"Tether: 0.999065 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"BNB: 588.68 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"USDC: 0.999521 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"XRP: 1.075 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"Solana: 73.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"TRON: 0.329134 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"figure-heloc: 1.006 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"dogecoin: 0.070127 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.585Z","level":"INFO","component":"FlashCrashDetector","message":"zcash: 486.51 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"Cardano: 0.194137 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"monero: 364.55 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"chainlink: 8.16 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"stellar: 0.170847 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"bitcoin-cash: 213.08 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"litecoin: 44.2 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"hedera-hashgraph: 0.070909 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"avalanche-2: 6.77 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"shiba-inu: 0.00000494 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"crypto-com-chain: 0.054621 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"uniswap: 3.89 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"near: 1.74 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"okb: 86.7 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.586Z","level":"INFO","component":"FlashCrashDetector","message":"aave: 92.67 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"Polkadot: 0.832896 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"internet-computer: 2.1 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"ethereum-classic: 6.6 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"kucoin-shares: 6.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"quant-network: 59.86 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"algorand: 0.090295 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"cosmos: 1.37 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"filecoin: 0.71758 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"arbitrum: 0.082444 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"aptos: 0.578434 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"pancakeswap-token: 1.43 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"vechain: 0.00471003 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.587Z","level":"INFO","component":"FlashCrashDetector","message":"tezos: 0.199456 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"optimism: 0.088735 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"the-graph: 0.01471546 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"axie-infinity: 0.827704 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"chiliz: 0.01272938 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"decentraland: 0.067939 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"theta-token: 0.128872 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"the-sandbox: 0.04197537 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"gala: 0.00180092 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"elrond-erd-2: 2.82 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"flow: 0.0263015 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"eos: 0.065014 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"maker: 1515.74 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.588Z","level":"INFO","component":"FlashCrashDetector","message":"fantom: 0.02101977 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.589Z","level":"INFO","component":"FlashCrashDetector","message":"matic-network: 0.126156 USD (Change: 0.0000%)"}
+[0] {"timestamp":"2026-08-04T08:20:26.670Z","level":"INFO","component":"SurveillanceEngine","message":"Polling cycle completed","context":{"assets_fetched":52,"alerts_triggered":0,"threshold_pct":"default 2.0%"}}

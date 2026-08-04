@@ -3,6 +3,7 @@ import prisma from "./src/lib/prisma"
 import { fetchMarketData } from "./src/lib/engine/coingecko"
 import { FlashCrashDetector } from "./src/lib/engine/flashCrashDetector"
 import { MemoryCache } from "./src/lib/engine/memoryCache"
+import { readSensitivity, describeSensitivity } from "./src/lib/sensitivityFile"
 import { logger } from "./src/lib/logger"
 
 const app = express()
@@ -41,7 +42,11 @@ async function pollMarketData() {
     }
 
     const rawData = await fetchMarketData(allIds)
-    const allAlerts = detector.checkForCrashes(rawData)
+
+    // Read the live Critical Sensitivity from the shared store (set via the
+    // Settings page → /api/settings/threshold). Falls back to the default 2.0%.
+    const thresholdPct = readSensitivity()
+    const allAlerts = detector.checkForCrashes(rawData, thresholdPct)
 
     // Fetch all watchlist items to filter alerts
     const watchlistItems = await prisma.watchlist.findMany({
@@ -81,9 +86,10 @@ async function pollMarketData() {
     lastFetchSuccess = true
 
     const assetsCount = Object.keys(rawData).length
-    logger.info("SurveillanceEngine", "Polling cycle completed", { 
-      assets_fetched: assetsCount, 
-      alerts_triggered: alerts.length 
+    logger.info("SurveillanceEngine", "Polling cycle completed", {
+      assets_fetched: assetsCount,
+      alerts_triggered: alerts.length,
+      threshold_pct: describeSensitivity(thresholdPct),
     })
   } catch (error) {
     lastFetchSuccess = false

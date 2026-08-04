@@ -22,7 +22,13 @@ export async function fetchMarketData(assetIds: string[]): Promise<CoinGeckoResp
   
   // Map array response to dictionary format
   const formatted: CoinGeckoResponse = {}
-  for (const coin of rawData) {
+  for (const coin of rawData as Array<{
+    id: string
+    name: string
+    current_price: number
+    price_change_percentage_24h: number | null
+    image: string
+  }>) {
     formatted[coin.id] = {
       name: coin.name,
       usd: coin.current_price,

@@ -17,7 +17,7 @@ export async function PATCH(req: Request) {
       if (typeof body.completed === "boolean") {
         completed = body.completed
       }
-    } catch (e) {
+    } catch {
       // Ignore JSON parse error, default to true
     }
 

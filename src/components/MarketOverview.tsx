@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { TrendingDown, TrendingUp } from "lucide-react"
+import { TrendingDown, TrendingUp, Activity, Globe, Zap } from "lucide-react"
+import { motion } from "framer-motion"
 
 export default function MarketOverview() {
   const [data, setData] = useState<{totalMarketCap: number, totalVolume: number, marketCapChange24h: number, error?: string} | null>(null)
@@ -24,25 +25,60 @@ export default function MarketOverview() {
 
   const isUp = data.marketCapChange24h >= 0
 
+  const statCards = [
+    {
+      icon: Globe,
+      label: "Global Market Cap",
+      value: formatCurrency(data.totalMarketCap),
+      accent: "from-neon-cyan/40 to-neon-cyan/0",
+    },
+    {
+      icon: Activity,
+      label: "24h Volume",
+      value: formatCurrency(data.totalVolume),
+      accent: "from-neon-cyan/40 to-neon-cyan/0",
+    },
+    {
+      icon: Zap,
+      label: "Market Cap Change",
+      value: `${isUp ? "+" : ""}${data.marketCapChange24h.toFixed(2)}%`,
+      accent: "from-neon-cyan/40 to-neon-cyan/0",
+      up: isUp,
+    },
+  ]
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-      <div className="bg-bg-card/40 border border-white/10 rounded-xl p-4">
-        <h4 className="text-binance-yellow text-xs font-bold uppercase tracking-wider mb-1">Global Market Cap</h4>
-        <p className="text-2xl font-mono font-bold text-white">{formatCurrency(data.totalMarketCap)}</p>
-      </div>
-
-      <div className="bg-bg-card/40 border border-white/10 rounded-xl p-4">
-        <h4 className="text-binance-yellow text-xs font-bold uppercase tracking-wider mb-1">24h Volume</h4>
-        <p className="text-2xl font-mono font-bold text-white">{formatCurrency(data.totalVolume)}</p>
-      </div>
-
-      <div className="bg-bg-card/40 border border-white/10 rounded-xl p-4">
-        <h4 className="text-binance-yellow text-xs font-bold uppercase tracking-wider mb-1">Market Cap Change</h4>
-        <div className={`flex items-center gap-2 font-mono font-bold text-2xl ${isUp ? "text-status-up" : "text-status-down"}`}>
-          {isUp ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
-          <span>{Math.abs(data.marketCapChange24h).toFixed(2)}%</span>
-        </div>
-      </div>
+      {statCards.map((card, i) => {
+        const Icon = card.icon
+        const colorClass = card.up === undefined
+          ? "text-neon-cyan"
+          : card.up ? "text-neon-green" : "text-neon-red"
+        return (
+          <motion.div
+            key={card.label}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.08, duration: 0.4, ease: "easeOut" }}
+            className="cyber-panel cyber-corners relative rounded-xl p-4 overflow-hidden group"
+          >
+            <div className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r ${card.accent}`} />
+            <div className="flex items-center justify-between mb-1.5">
+              <h4 className="cyber-label">{card.label}</h4>
+              <Icon size={16} className={`${colorClass} transition-transform group-hover:scale-125 group-hover:rotate-6 duration-300`} />
+            </div>
+            <p className="text-2xl font-mono font-bold text-white group-hover:drop-shadow-[0_0_12px_rgba(34,197,94,0.35)] transition-all duration-300">
+              {card.value}
+            </p>
+            {card.up !== undefined && (
+              <span className={`inline-flex items-center gap-1 mt-1 text-xs font-semibold ${colorClass}`}>
+                {card.up ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                24h
+              </span>
+            )}
+          </motion.div>
+        )
+      })}
     </div>
   )
 }

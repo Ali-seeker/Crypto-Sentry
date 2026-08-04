@@ -13,6 +13,7 @@ model User {
   password_hash   String
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
+  image           String?     @db.Text
   guide_completed Boolean     @default(false)
   watchlists      Watchlist[]
 

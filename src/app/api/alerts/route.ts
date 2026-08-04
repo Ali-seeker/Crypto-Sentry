@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
+import { Prisma } from "@prisma/client"
 import { logger } from "@/lib/logger"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
@@ -30,7 +31,7 @@ export async function GET(req: Request) {
     const assetIds = watchlists.map(w => w.asset_id)
 
     // Build filter
-    const whereClause: any = {
+    const whereClause: Prisma.CryptoAlertWhereInput = {
       asset_id: { in: assetIds }
     }
 

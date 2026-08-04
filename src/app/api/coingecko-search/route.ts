@@ -24,15 +24,11 @@ export async function GET(req: Request) {
 
     const data = await res.json()
     // Return the top 10 matches to keep the modal clean
-    const topMatches = (data.coins || []).slice(0, 10).map((c: any) => ({
-      id: c.id,
-      name: c.name,
-      symbol: c.symbol,
-      thumb: c.thumb,
-    }))
+    const coins: Array<{ id: string; name: string; symbol: string; thumb?: string }> = data.coins || []
+    const topMatches = coins.slice(0, 10)
 
     return NextResponse.json({ coins: topMatches })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("CoinGecko Search Error:", error)
     return NextResponse.json({ error: "Failed to search coins" }, { status: 500 })
   }

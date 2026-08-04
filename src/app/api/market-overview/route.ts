@@ -1,7 +1,13 @@
 import { NextResponse } from "next/server"
 
+interface MarketOverviewData {
+  totalMarketCap: number
+  totalVolume: number
+  marketCapChange24h: number
+}
+
 // Simple in-memory cache
-let cachedData: any = null
+let cachedData: MarketOverviewData | null = null
 let cacheTimestamp: number = 0
 const CACHE_TTL = 60 * 1000 // 60 seconds
 
@@ -35,7 +41,7 @@ export async function GET() {
     cacheTimestamp = now
 
     return NextResponse.json(cachedData)
-  } catch (error) {
+  } catch {
     if (cachedData) return NextResponse.json(cachedData)
     return NextResponse.json({ error: "Failed to fetch market overview" }, { status: 500 })
   }

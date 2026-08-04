@@ -30,7 +30,10 @@ export class FlashCrashDetector {
     return ASSET_NAMES[asset_id] || asset_id
   }
 
-  public checkForCrashes(currentPrices: Record<string, { usd: number }>): AlertRecord[] {
+  public checkForCrashes(
+    currentPrices: Record<string, { usd: number }>,
+    thresholdPct: number = 2.0,
+  ): AlertRecord[] {
     const alerts: AlertRecord[] = []
     const now = Date.now()
 
@@ -49,7 +52,9 @@ export class FlashCrashDetector {
       // Debug log (used to verify math and for the debug endpoint to trigger)
       logger.info("FlashCrashDetector", `${this.getAssetName(asset_id)}: ${currentPrice} USD (Change: ${dropPct.toFixed(4)}%)`)
 
-      const THRESHOLD = parseFloat(process.env.CRASH_THRESHOLD_PCT || "2.0")
+      // NOTE: threshold now comes from the shared sensitivity store (set by the
+      // Settings page and read by the engine each poll), not a hardcoded const.
+      const THRESHOLD = thresholdPct
       let alertType: "CRASH" | "SPIKE" | null = null
       if (dropPct <= -THRESHOLD) {
         alertType = "CRASH"

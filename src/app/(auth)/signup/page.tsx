@@ -66,7 +66,7 @@ export default function SignupPage() {
       } else {
         router.push("/login?registered=true")
       }
-    } catch (err) {
+    } catch {
       setError("Something went wrong. Please try again.")
       setLoading(false)
     }
@@ -81,53 +81,51 @@ export default function SignupPage() {
         className="w-full"
       >
         <div className="mb-8">
-          <div className="w-12 h-12 bg-bg-card rounded-lg border border-binance-yellow/50 shadow-[0_0_15px_rgba(252,213,53,0.15)] flex items-center justify-center mb-6">
-            <ShieldAlert className="text-binance-yellow w-6 h-6" />
+          <div className="w-12 h-12 rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 shadow-[0_0_20px_rgba(34,197,94,0.35)] flex items-center justify-center mb-6">
+            <ShieldAlert className="text-neon-cyan w-6 h-6" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white mb-2">Create Account</h1>
-          <p className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+          <h1 className="glitch text-3xl font-bold tracking-tight text-white mb-2" data-text="Create Account">
+            <span className="cyber-title">Create Account</span>
+          </h1>
+          <p className="cyber-label">
             Join the Surveillance Network
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div className="p-3 bg-status-down/10 border border-status-down/20 rounded-md text-status-down text-sm">
+            <div className="p-3 bg-neon-red/10 border border-neon-red/30 rounded-md text-neon-red text-sm">
               {error}
             </div>
           )}
           
           <div className="space-y-1.5">
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-              Email Address
-            </label>
+            <label className="cyber-label block">Email Address</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-4 w-4 text-gray-500" />
+                <Mail className="h-4 w-4 text-neon-cyan/50" />
               </div>
               <input 
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:shadow-[0_0_15px_rgba(252,213,53,0.2)] transition-all duration-300"
+                className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="name@example.com"
               />
             </div>
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-              Password
-            </label>
+            <label className="cyber-label block">Password</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Lock className="h-4 w-4 text-gray-500" />
+                <Lock className="h-4 w-4 text-neon-cyan/50" />
               </div>
               <input 
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-bg-card border border-gray-800 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-binance-yellow focus:shadow-[0_0_15px_rgba(252,213,53,0.2)] transition-all duration-300"
+                className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="••••••••"
               />
             </div>
@@ -139,15 +137,15 @@ export default function SignupPage() {
             whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="w-full bg-binance-yellow text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-neon-cyan to-neon-cyan text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:shadow-[0_0_24px_rgba(34,197,94,0.4)] transition-all disabled:opacity-50"
           >
             {loading ? "Creating Account..." : "Create Account"} <ArrowRight className="w-4 h-4" />
           </motion.button>
         </form>
 
-        <p className="mt-10 text-center text-sm text-gray-500">
+        <p className="mt-10 text-center text-sm text-white/50">
           Already have an account?{" "}
-          <Link href="/login" className="text-binance-yellow font-medium hover:underline transition-colors">
+          <Link href="/login" className="text-neon-cyan font-medium hover:underline hover:drop-shadow-[0_0_6px_rgba(34,197,94,0.8)] transition-colors">
             Log in
           </Link>
         </p>

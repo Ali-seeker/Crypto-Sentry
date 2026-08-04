@@ -2,23 +2,364 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   CRYPTO-SENTRY :: CYBERPUNK // DEEP NETWORK TERMINAL
+   ============================================================ */
+
 :root {
-  --binance-yellow: #FCD535;
-  --binance-yellow-dark: #F0B90B;
-  --bg-dark: #0B0E11;
-  --bg-card: #1E2329;
-  --text-primary: #FFFFFF;
-  --status-up: #0ECB81;
-  --status-down: #F6465D;
+  /* Core palette */
+  --bg-void: #0a0a0a;
+  --bg-panel: #0d0d0d;
+  --bg-card: #101410;
+  --text-primary: #f4f4f5;
+
+  /*
+    BITBASH TERMINAL THEME
+    Single source of truth for the brand accent.
+    All accent surfaces reference --accent (neon green).
+    NOTE: `neon-cyan` is kept as the historical alias for the accent —
+    it now renders neon green for backward compatibility with existing classes.
+  */
+  --accent: #22c55e;
+  --accent-bright: #39ff14;
+  --accent-teal: #10b981;
+
+  --neon-cyan: var(--accent);
+  --neon-magenta: var(--accent);
+  --neon-purple: var(--accent);
+  --neon-violet: var(--accent);
+  --neon-green: #39ff14;
+  --neon-amber: #facc15;
+  --neon-red: #ef4444;
+
+  /* Semantic (kept for compatibility) */
+  --binance-yellow: var(--accent);
+  --binance-yellow-dark: #86efac;
+  --bg-dark: var(--bg-void);
+  --status-up: var(--neon-green);
+  --status-down: var(--neon-red);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--text-primary);
-  background-color: var(--bg-dark);
+  background-color: var(--bg-void);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+  overflow-x: hidden;
+}
+
+/* Blocky uppercase heading style (Section 2) */
+h1, h2, .cyber-title, .glitch {
+  font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* Monospace / readout font */
+.font-mono,
+[id*="mono"],
+.cyber-label {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+/* ============================================================
+   CYBER UTILITIES
+   ============================================================ */
+
+/* Neon text with glow (accent green) — softened */
+.neon-text {
+  color: var(--accent-bright);
+  text-shadow:
+    0 0 6px rgba(34, 197, 94, 0.5),
+    0 0 20px rgba(34, 197, 94, 0.3);
+}
+.neon-text-purple,
+.neon-text-magenta {
+  color: var(--accent);
+  text-shadow:
+    0 0 6px rgba(34, 197, 94, 0.45),
+    0 0 20px rgba(34, 197, 94, 0.25);
+}
+
+/* Gradient cyber title — green-to-teal only (no pink/purple), high contrast on black */
+.cyber-title {
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(
+    135deg,
+    #a7f3d0 0%,
+    var(--accent-bright) 35%,
+    var(--accent) 70%,
+    var(--accent-teal) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Shared green glow for primary CTAs / active nav — softened */
+.neon-glow {
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.26);
+}
+.neon-glow-strong {
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.36);
+}
+
+/* Page title — static, no looping animation.
+   A single quick one-time glitch flicker plays on mount (<300ms) then settles
+   to clean static text; no continuous motion. */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  clip-path: inset(0 0 0 0);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.glitch::before {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: -1.5px 0 var(--accent-bright);
+  animation: glitch-once 0.28s steps(2, end) 1 both;
+}
+.glitch::after {
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 1.5px 0 var(--neon-teal, var(--accent-teal));
+  animation: glitch-once 0.22s steps(2, end) 1 0.06s both;
+}
+
+/* Cyber card / panel */
+.cyber-panel {
+  position: relative;
+  background: linear-gradient(160deg, rgba(16, 20, 16, 0.9), rgba(7, 8, 7, 0.9));
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 0 1px rgba(34, 197, 94, 0.04),
+    0 20px 40px -20px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cyber-panel:hover {
+  border-color: rgba(34, 197, 94, 0.45);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 20px rgba(34, 197, 94, 0.12),
+    0 0 40px -12px rgba(34, 197, 94, 0.24);
+}
+
+/* Sheen sweep across a card */
+.holo-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.holo-sheen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(34, 197, 94, 0.12),
+    rgba(57, 255, 20, 0.06),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: sheen-sweep 6s ease-in-out infinite;
+}
+
+/* Corner ticks (cyber frame brackets) */
+.cyber-corners::before,
+.cyber-corners::after,
+.cyber-corners > .corner::before,
+.cyber-corners > .corner::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--neon-cyan);
+  border-style: solid;
+  opacity: 0.7;
+}
+.cyber-corners::before {
+  top: 6px;
+  left: 6px;
+  border-width: 2px 0 0 2px;
+}
+.cyber-corners::after {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 2px 2px 0;
+}
+.cyber-corners > .corner::before {
+  top: 6px;
+  right: 6px;
+  border-width: 2px 2px 0 0;
+}
+.cyber-corners > .corner::after {
+  bottom: 6px;
+  left: 6px;
+  border-width: 0 0 2px 2px;
+}
+
+/* Scanline sweep overlay */
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+.scanline::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, rgba(34, 197, 94, 0.06), transparent);
+  animation: scan-sweep 5s linear infinite;
+}
+
+/* Small label chip */
+.cyber-label {
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 10px;
+  color: rgba(34, 197, 94, 0.8);
+}
+
+/* Blinking cursor */
+.cursor-blink::after {
+  content: "▍";
+  margin-left: 2px;
+  color: var(--neon-cyan);
+  animation: blink 1s step-end infinite;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes glitch-once {
+  0%   { opacity: 0.9; transform: translate(-2px, -1px); }
+  50%  { opacity: 0.45; transform: translate(2px, 1px); }
+  100% { opacity: 0; transform: translate(0, 0); }
+}
+
+@keyframes sheen-sweep {
+  0%, 60%   { transform: translateX(100%) skewX(-20deg); }
+  100%      { transform: translateX(400%) skewX(-20deg); }
+}
+
+@keyframes scan-sweep {
+  0%        { top: -100%; }
+  100%      { top: 110%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes grid-move {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33%      { transform: translateY(-12px) translateX(6px); }
+  66%      { transform: translateY(6px) translateX(-6px); }
+}
+
+@keyframes hue-rotate {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes matrix-fall {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.85; }
+  95%      { opacity: 0.97; }
+}
+
+/* ============================================================
+   SCROLLBAR (neon)
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-void);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), var(--accent-teal));
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.35);
+  color: #fff;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* ============================================================
+   DENSITY (Compact UI / Expanded View)
+   Set by the shared settings store via data-density on <html>.
+   Compact tightens page padding, grid gaps and card padding.
+   ============================================================ */
+html[data-density="compact"] .min-h-screen {
+  padding: 1.25rem !important;
+}
+html[data-density="compact"] .grid {
+  gap: 0.5rem !important;
+}
+html[data-density="compact"] .cyber-panel {
+  padding: 0.9rem !important;
+}
+html[data-density="compact"] [class*="space-y-"] > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 0.625rem !important;
 }

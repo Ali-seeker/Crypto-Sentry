@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Crypto Sentry",
+  title: "Bitbash Sentry V4",
   description: "Real-time cryptocurrency market surveillance terminal.",
 };
 

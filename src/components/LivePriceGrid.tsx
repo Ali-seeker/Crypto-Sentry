@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import PriceCard from "./PriceCard"
 import Skeleton from "./Skeleton"
+import { useSettings } from "./SettingsProvider"
+import { pollIntervalFor } from "@/lib/clientSettings"
+import { SEARCH_EVENT } from "@/lib/searchEvents"
 
 // Assuming a predefined list since the backend might only return alert history as a fallback,
 // which wouldn't contain all 10 assets if they haven't crashed.
@@ -17,7 +20,12 @@ export default function LivePriceGrid() {
   const [isStale, setIsStale] = useState(false)
   const [ageMs, setAgeMs] = useState<number | null>(null)
   const [watchlist, setWatchlist] = useState<Record<string, string>>({}) // asset_id -> watchlist_id
+  // In-memory rolling price buffer for sparklines (per asset_id, last 12 points)
+  const [history, setHistory] = useState<Record<string, number[]>>({})
+  const [filter, setFilter] = useState("")
   const { data: session } = useSession()
+  const { settings } = useSettings()
+  const pollInterval = pollIntervalFor(settings)
 
   const fetchWatchlist = async () => {
     if (!session) return
@@ -46,6 +54,18 @@ export default function LivePriceGrid() {
       setIsStale(result.stale)
       setAgeMs(result.ageMs)
       setError(null)
+      if (result.prices) {
+        setHistory((prev) => {
+          const next: Record<string, number[]> = {}
+          Object.entries(result.prices as Record<string, { usd?: number }>).forEach(([id, p]) => {
+            if (typeof p.usd !== "number") return
+            const arr = prev[id] ? [...prev[id], p.usd] : [p.usd]
+            if (arr.length > 12) arr.shift()
+            next[id] = arr
+          })
+          return { ...prev, ...next }
+        })
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unexpected error occurred")
     } finally {
@@ -56,10 +76,19 @@ export default function LivePriceGrid() {
   useEffect(() => {
     fetchWatchlist()
     fetchData()
-    const interval = setInterval(fetchData, 5000)
+    const interval = setInterval(fetchData, pollInterval)
     return () => clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session])
+  }, [session, pollInterval])
+
+  useEffect(() => {
+    const onSearch = (e: Event) => {
+      const q = (e as CustomEvent<string>).detail ?? ""
+      setFilter(q)
+    }
+    window.addEventListener(SEARCH_EVENT, onSearch)
+    return () => window.removeEventListener(SEARCH_EVENT, onSearch)
+  }, [])
 
   if (error && !data) {
     return (
@@ -87,11 +116,19 @@ export default function LivePriceGrid() {
   }
 
   const watchlistEntries = Object.entries(watchlist)
+  const query = filter.trim().toLowerCase()
+  const filteredEntries = query
+    ? watchlistEntries.filter(
+        ([assetId]) =>
+          assetId.toLowerCase().includes(query) ||
+          (data?.[assetId]?.name ?? assetId).toLowerCase().includes(query),
+      )
+    : watchlistEntries
 
   return (
     <div className="space-y-6">
       {isStale && (
-        <div className="bg-binance-yellow/20 border border-binance-yellow text-binance-yellow px-4 py-3 rounded-lg flex items-center gap-3">
+        <div className="bg-neon-amber/10 border border-neon-amber/30 text-neon-amber px-4 py-3 rounded-lg flex items-center gap-3 shadow-[0_0_16px_rgba(255,213,61,0.15)]">
           <span className="text-xl">⚠️</span>
           <div>
             <p className="font-semibold">Live feed unavailable</p>
@@ -103,23 +140,31 @@ export default function LivePriceGrid() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {watchlistEntries.length === 0 ? (
-          <div className="col-span-full py-16 px-4 text-center border border-dashed border-white/10 rounded-xl bg-bg-card/20">
-            <h3 className="text-2xl font-bold text-white mb-3">Your Watchlist is Empty</h3>
+        {filteredEntries.length === 0 ? (
+          query ? (
+            <div className="col-span-full py-12 px-4 text-center border border-dashed border-neon-cyan/20 rounded-xl bg-bg-card/20">
+              <h3 className="text-xl font-bold cyber-title mb-2">No assets match &quot;{filter}&quot;</h3>
+              <p className="text-white/50 text-sm">Try another name or symbol.</p>
+          </div>
+        ) : (
+          <div className="col-span-full py-16 px-4 text-center border border-dashed border-neon-cyan/20 rounded-xl bg-bg-card/20">
+            <h3 className="text-2xl font-bold cyber-title mb-3">Your Watchlist is Empty</h3>
             <p className="text-white/50 mb-8 max-w-md mx-auto">
               Monitor your favorite crypto assets in real-time. Head over to the Market page to discover and star assets.
             </p>
-            <a href="/market" className="px-8 py-3 bg-binance-yellow text-bg-dark font-bold rounded-lg hover:bg-binance-yellow/90 transition-colors inline-block">
+            <a href="/market" className="px-8 py-3 bg-gradient-to-r from-neon-cyan to-neon-cyan text-black font-bold rounded-lg hover:shadow-[0_0_24px_rgba(34,197,94,0.4)] transition-all inline-block">
               Explore Market
             </a>
           </div>
+          )
         ) : (
-          watchlistEntries.map(([assetId, watchlistId], index) => {
+          filteredEntries.map(([assetId, watchlistId], index) => {
             const priceData = data?.[assetId]
             
             if (!priceData) {
               return (
-                <div key={assetId} className="p-5 rounded-xl border border-white/5 bg-bg-card/30 opacity-50">
+                <div key={assetId} className="p-5 rounded-xl border border-neon-cyan/10 bg-bg-card/30 opacity-50 cyber-corners">
+                  <div className="corner" />
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="font-semibold text-lg capitalize">{assetId.replace('-', ' ')}</h3>
                     <span className="text-sm text-white/30">{assetId}</span>
@@ -143,6 +188,7 @@ export default function LivePriceGrid() {
                 initialWatchlistId={watchlistId}
                 ageMs={ageMs}
                 index={index}
+                history={history[assetId]}
               />
             )
           })

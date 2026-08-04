@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { Prisma } from "@prisma/client"
 import AlertLog from "@/components/AlertLog"
 import AlertFilters from "@/components/AlertFilters"
 import { ShieldAlert } from "lucide-react"
@@ -25,7 +26,7 @@ export default async function AlertsPage({
   })
   const assetIds = watchlists.map(w => w.asset_id)
 
-  const whereClause: any = {
+  const whereClause: Prisma.CryptoAlertWhereInput = {
     asset_id: { in: assetIds }
   }
 
@@ -70,7 +71,7 @@ export default async function AlertsPage({
   })
 
   // Fetch live images from engine cache
-  let pricesCache: any = {}
+  let pricesCache: Record<string, { image?: string }> = {}
   try {
     const res = await fetch("http://localhost:4000/cache", { next: { revalidate: 60 } })
     if (res.ok) {
@@ -79,22 +80,22 @@ export default async function AlertsPage({
         pricesCache = data.prices
       }
     }
-  } catch (e) {
+  } catch {
     // Engine might be down, ignore
   }
 
   return (
-    <div className="min-h-screen p-6 md:p-10 bg-bg-dark text-white relative">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-status-down/5 rounded-full blur-[100px] pointer-events-none" />
-
+    <div className="min-h-screen p-6 md:p-10 bg-transparent text-white relative">
       <div className="relative z-10 max-w-4xl mx-auto space-y-8">
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-neon-cyan/15 pb-6">
           <div>
-            <div className="flex items-center gap-3 mb-2 text-status-down">
-              <ShieldAlert size={28} />
-              <span className="font-mono text-sm tracking-widest uppercase">Surveillance Log</span>
+            <div className="flex items-center gap-3 mb-2 text-neon-red">
+              <ShieldAlert size={28} className="drop-shadow-[0_0_8px_rgba(255,59,92,0.8)]" />
+              <span className="cyber-label">Surveillance Log</span>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight">Alert History</h1>
+            <h1 className="glitch text-4xl font-bold tracking-tight" data-text="Alert History">
+              <span className="cyber-title">Alert History</span>
+            </h1>
           </div>
         </header>
 
@@ -102,14 +103,16 @@ export default async function AlertsPage({
           {assetIds.length > 0 && <AlertFilters assets={assetIds} />}
           
           {assetIds.length === 0 ? (
-            <div className="text-center py-20 border border-white/10 rounded-xl bg-bg-card/40 backdrop-blur-md">
-              <ShieldAlert size={48} className="mx-auto text-white/20 mb-4" />
+            <div className="text-center py-20 border border-neon-cyan/15 rounded-xl bg-bg-card/40 backdrop-blur-md cyber-corners">
+              <div className="corner" />
+              <ShieldAlert size={48} className="mx-auto text-neon-cyan/40 mb-4" />
               <h2 className="text-2xl font-semibold mb-2">No assets in your Watchlist</h2>
               <p className="text-white/60">Star some assets on Dashboard or Market to see their alerts here.</p>
             </div>
           ) : alerts.length === 0 ? (
-            <div className="text-center py-20 border border-white/10 rounded-xl bg-bg-card/40 backdrop-blur-md">
-              <ShieldAlert size={48} className="mx-auto text-white/20 mb-4" />
+            <div className="text-center py-20 border border-neon-cyan/15 rounded-xl bg-bg-card/40 backdrop-blur-md cyber-corners">
+              <div className="corner" />
+              <ShieldAlert size={48} className="mx-auto text-neon-green/40 mb-4" />
               <h2 className="text-2xl font-semibold mb-2">No flash crashes detected yet</h2>
               <p className="text-white/60">The system is watching. All clear.</p>
             </div>

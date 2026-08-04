@@ -20,6 +20,7 @@ const TOUR_STEPS = [
     targetId: "watchlist-star",
     content: "Starring adds assets to your personal watchlist.",
     route: "/market",
+    placement: "right"
   },
   {
     targetId: "market-search",
@@ -180,7 +181,7 @@ export default function UserGuide() {
               height: targetRect.height + 24,
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute rounded-lg border-2 border-binance-yellow shadow-[0_0_20px_rgba(252,213,53,0.5)] pointer-events-none"
+            className="absolute rounded-lg border-2 border-neon-cyan shadow-[0_0_20px_rgba(34,197,94,0.5)] pointer-events-none"
           />
         )}
 
@@ -205,10 +206,10 @@ export default function UserGuide() {
                   : targetRect.bottom + 20)
             }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="absolute w-[300px] bg-[#1E2329] border border-white/10 rounded-xl p-5 shadow-2xl pointer-events-auto"
+            className="absolute w-[300px] bg-[#0b101c] border border-neon-cyan/25 rounded-xl p-5 shadow-[0_0_30px_rgba(34,197,94,0.15)] pointer-events-auto"
           >
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-binance-yellow uppercase tracking-widest">
+              <span className="cyber-label">
                 Step {currentStep + 1} of {TOUR_STEPS.length}
               </span>
               <button 
@@ -238,7 +239,7 @@ export default function UserGuide() {
                   if (isLastStep) dismissGuide()
                   else setCurrentStep(prev => prev + 1)
                 }}
-                className="px-4 py-2 text-sm font-bold bg-binance-yellow text-bg-dark rounded-lg hover:bg-binance-yellow/90 transition-colors"
+                className="px-4 py-2 text-sm font-bold bg-gradient-to-r from-neon-cyan to-neon-cyan text-black rounded-lg hover:shadow-[0_0_18px_rgba(34,197,94,0.4)] transition-all"
               >
                 {isLastStep ? "Finish" : "Next"}
               </button>
