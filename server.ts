@@ -45,7 +45,7 @@ async function pollMarketData() {
 
     // Read the live Critical Sensitivity from the shared store (set via the
     // Settings page → /api/settings/threshold). Falls back to the default 2.0%.
-    const thresholdPct = readSensitivity()
+    const thresholdPct = await readSensitivity()
     const allAlerts = detector.checkForCrashes(rawData, thresholdPct)
 
     // Fetch all watchlist items to filter alerts

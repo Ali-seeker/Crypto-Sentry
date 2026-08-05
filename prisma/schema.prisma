@@ -51,3 +51,8 @@ model MonitoredAsset {
   added_by   String?
   added_at   DateTime  @default(now())
 }
+
+model SystemSetting {
+  key   String @id
+  value String
+}
