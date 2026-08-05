@@ -43,21 +43,21 @@ export default function SettingsContent() {
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-white/80">Critical Sensitivity</span>
             <span className="font-mono font-bold text-neon-cyan">
-              {settings.criticalThreshold.toFixed(1)}%
+              {settings.criticalThreshold.toFixed(2)}%
             </span>
           </div>
           <input
             type="range"
             min={-5}
-            max={-0.5}
-            step={0.1}
+            max={-0.05}
+            step={0.05}
             value={settings.criticalThreshold}
             onChange={(e) => update({ criticalThreshold: parseFloat(e.target.value) })}
             className="w-full accent-neon-green"
           />
           <p className="text-xs text-white/40 mt-2 flex justify-between">
             <span>−5% (low sensitivity)</span>
-            <span>−0.5% (high sensitivity)</span>
+            <span>−0.05% (high sensitivity)</span>
           </p>
           {/* WIRED: this value controls BOTH the price-card STABLE→ALERT logic
               (src/components/PriceCard.tsx) AND the Express engine's actual

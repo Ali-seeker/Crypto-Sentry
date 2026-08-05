@@ -1,7 +1,7 @@
 import prisma from "./prisma"
 
 export const DEFAULT_THRESHOLD_PCT = 2.0
-const MIN_THRESHOLD_PCT = 0.5
+const MIN_THRESHOLD_PCT = 0.05
 const MAX_THRESHOLD_PCT = 5.0
 
 export function clampThreshold(value: number): number {
