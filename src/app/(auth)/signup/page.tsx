@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [isBlinking, setIsBlinking] = useState(false)
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -72,6 +73,15 @@ export default function SignupPage() {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      setIsBlinking(true)
+      setTimeout(() => setIsBlinking(false), 150)
+      handleSubmit(e as unknown as React.FormEvent)
+    }
+  }
+
   return (
     <AuthLayout>
       <motion.div 
@@ -109,6 +119,7 @@ export default function SignupPage() {
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="name@example.com"
               />
@@ -125,6 +136,7 @@ export default function SignupPage() {
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="••••••••"
               />
@@ -134,6 +146,7 @@ export default function SignupPage() {
           <motion.button 
             type="submit" 
             disabled={loading}
+            animate={isBlinking ? { scale: 0.95, filter: "brightness(1.5)" } : { scale: 1, filter: "brightness(1)" }}
             whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}

@@ -19,6 +19,7 @@ function LoginForm() {
   const [successMsg, setSuccessMsg] = useState(
     searchParams.get("registered") ? "Account created successfully! Please log in." : ""
   )
+  const [isBlinking, setIsBlinking] = useState(false)
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -46,6 +47,15 @@ function LoginForm() {
       setError("Invalid email or password")
     } else {
       router.push("/dashboard")
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      setIsBlinking(true)
+      setTimeout(() => setIsBlinking(false), 150)
+      handleSubmit(e as unknown as React.FormEvent)
     }
   }
 
@@ -90,6 +100,7 @@ function LoginForm() {
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="name@example.com"
               />
@@ -106,6 +117,7 @@ function LoginForm() {
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={handleKeyDown}
                 className="w-full bg-bg-card border border-white/10 rounded-lg pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-neon-cyan focus:shadow-[0_0_18px_rgba(34,197,94,0.25)] transition-all duration-300"
                 placeholder="••••••••"
               />
@@ -114,6 +126,7 @@ function LoginForm() {
 
           <motion.button 
             type="submit" 
+            animate={isBlinking ? { scale: 0.95, filter: "brightness(1.5)" } : { scale: 1, filter: "brightness(1)" }}
             whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}

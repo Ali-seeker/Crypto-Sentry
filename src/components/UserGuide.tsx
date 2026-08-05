@@ -33,6 +33,27 @@ const TOUR_STEPS = [
     route: "/market",
     placement: "right"
   },
+  {
+    targetId: "global-market-cap",
+    content: "View the overall market capitalization across all tracked assets.",
+    route: "/dashboard",
+  },
+  {
+    targetId: "24h-volume",
+    content: "Monitor the total trading volume over the last 24 hours.",
+    route: "/dashboard",
+  },
+  {
+    targetId: "market-cap-change",
+    content: "Track the 24-hour percentage change in the market.",
+    route: "/dashboard",
+  },
+  {
+    targetId: "sentry-analytics",
+    content: "Check out our AI-powered sentiment analysis and volatility index.",
+    route: "/dashboard",
+    placement: "left"
+  },
 ]
 
 export default function UserGuide() {
@@ -195,11 +216,13 @@ export default function UserGuide() {
               scale: 1,
               x: step.placement === "right" 
                 ? targetRect.right + 20 
+                : step.placement === "left"
+                ? Math.max(20, targetRect.left - 320)
                 : Math.min(
                     Math.max(20, targetRect.left + (targetRect.width / 2) - 150),
                     typeof window !== 'undefined' ? window.innerWidth - 320 : 0
                   ),
-              y: step.placement === "right"
+              y: step.placement === "right" || step.placement === "left"
                 ? Math.max(20, targetRect.top + (targetRect.height / 2) - 100)
                 : Math.max(20, targetRect.bottom + 30 > (typeof window !== 'undefined' ? window.innerHeight : 0) - 200
                   ? targetRect.top - 180

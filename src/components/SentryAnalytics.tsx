@@ -48,7 +48,7 @@ export default function SentryAnalytics() {
           : "RANGED MARKET — SENTIMENT NEUTRAL"
 
   return (
-    <section className="cyber-panel cyber-corners relative rounded-xl p-5 h-full">
+    <section id="sentry-analytics" className="cyber-panel cyber-corners relative rounded-xl p-5 h-full">
       <div className="corner" />
       <div className="flex items-center gap-2 mb-4">
         <BrainCircuit size={16} className="text-neon-cyan" />

@@ -1,6 +1,5 @@
 import Sidebar from "@/components/Sidebar"
 import UserGuide from "@/components/UserGuide"
-import AlertNotifier from "@/components/AlertNotifier"
 import AnimatedBackground from "@/components/AnimatedBackground"
 import PageTransition from "@/components/PageTransition"
 import BootScreen from "@/components/BootScreen"
@@ -14,7 +13,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen bg-bg-void text-white flex-col md:flex-row">
         <BootScreen />
         <UserGuide />
-        <AlertNotifier />
         <Sidebar />
         <AnimatedBackground />
         <TickerTape />

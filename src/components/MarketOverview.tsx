@@ -57,6 +57,7 @@ export default function MarketOverview() {
         return (
           <motion.div
             key={card.label}
+            id={card.label.toLowerCase().replace(/\s+/g, '-')}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.08, duration: 0.4, ease: "easeOut" }}

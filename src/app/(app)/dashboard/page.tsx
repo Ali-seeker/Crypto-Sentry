@@ -4,6 +4,7 @@ import LiveIndicator from "@/components/LiveIndicator"
 import MarketOverview from "@/components/MarketOverview"
 import AlertFeed from "@/components/AlertFeed"
 import SentryAnalytics from "@/components/SentryAnalytics"
+import AlertNotifier from "@/components/AlertNotifier"
 import { ShieldAlert, Activity } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -28,9 +29,12 @@ export default async function DashboardPage() {
               <LiveIndicator />
             </div>
           </div>
-          <div id="dashboard-stats" className="font-mono text-sm font-medium text-white/50">
-            Total lifetime alerts recorded:{" "}
-            <span className="neon-text font-bold">{totalAlerts}</span>
+          <div id="dashboard-stats" className="flex items-center gap-4">
+            <div className="font-mono text-sm font-medium text-white/50">
+              Total lifetime alerts recorded:{" "}
+              <span className="neon-text font-bold">{totalAlerts}</span>
+            </div>
+            <AlertNotifier />
           </div>
         </header>
 
